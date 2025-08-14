@@ -606,12 +606,12 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   headerTitle: {
-    fontSize: typography.sizes.lg,
+    fontSize: typography.headingMedium.fontSize,
     fontWeight: '600',
     color: Colors.text,
   },
   headerSubtitle: {
-    fontSize: typography.sizes.sm,
+    fontSize: typography.bodyMedium.fontSize,
     color: Colors.textSecondary,
   },
   completeLaterButton: {
@@ -622,7 +622,7 @@ const styles = StyleSheet.create({
     paddingVertical: spacing.xs,
   },
   completeLaterText: {
-    fontSize: typography.sizes.sm,
+    fontSize: typography.bodyMedium.fontSize,
     color: Colors.textSecondary,
   },
   
@@ -654,12 +654,12 @@ const styles = StyleSheet.create({
     marginBottom: spacing.lg,
   },
   stepTitle: {
-    fontSize: typography.sizes.xl,
+    fontSize: typography.displaySmall.fontSize,
     fontWeight: '600',
     color: Colors.text,
   },
   stepDescription: {
-    fontSize: typography.sizes.md,
+    fontSize: typography.bodyLarge.fontSize,
     color: Colors.textSecondary,
     lineHeight: 24,
     marginBottom: spacing.xl,
@@ -677,12 +677,12 @@ const styles = StyleSheet.create({
     marginBottom: spacing.md,
   },
   emailLabel: {
-    fontSize: typography.sizes.sm,
+    fontSize: typography.bodyMedium.fontSize,
     color: Colors.textSecondary,
     marginBottom: spacing.xs,
   },
   emailValue: {
-    fontSize: typography.sizes.md,
+    fontSize: typography.bodyLarge.fontSize,
     fontWeight: '500',
     color: Colors.text,
   },
@@ -696,7 +696,7 @@ const styles = StyleSheet.create({
     borderRadius: borderRadius.md,
   },
   statusText: {
-    fontSize: typography.sizes.sm,
+    fontSize: typography.bodyMedium.fontSize,
     fontWeight: '600',
   },
   verificationHelp: {
@@ -710,7 +710,7 @@ const styles = StyleSheet.create({
     borderColor: Colors.primary + '30',
   },
   verificationHelpText: {
-    fontSize: typography.sizes.sm,
+    fontSize: typography.bodyMedium.fontSize,
     color: Colors.textSecondary,
     flex: 1,
     lineHeight: 18,
@@ -724,7 +724,7 @@ const styles = StyleSheet.create({
     gap: spacing.sm,
   },
   inputLabel: {
-    fontSize: typography.sizes.md,
+    fontSize: typography.bodyLarge.fontSize,
     fontWeight: '600',
     color: Colors.text,
   },
@@ -742,7 +742,7 @@ const styles = StyleSheet.create({
   textInput: {
     flex: 1,
     marginLeft: spacing.sm,
-    fontSize: typography.sizes.md,
+    fontSize: typography.bodyLarge.fontSize,
     color: Colors.text,
   },
   serviceSelector: {
@@ -758,7 +758,7 @@ const styles = StyleSheet.create({
     ...shadows.light,
   },
   serviceSelectorText: {
-    fontSize: typography.sizes.md,
+    fontSize: typography.bodyLarge.fontSize,
   },
   
   // Documents Step
@@ -805,7 +805,7 @@ const styles = StyleSheet.create({
     marginBottom: spacing.xs,
   },
   checklistTitle: {
-    fontSize: typography.sizes.md,
+    fontSize: typography.bodyLarge.fontSize,
     fontWeight: '600',
     color: Colors.text,
     flex: 1,
@@ -817,12 +817,12 @@ const styles = StyleSheet.create({
     borderRadius: borderRadius.sm,
   },
   requiredText: {
-    fontSize: typography.sizes.xs,
+    fontSize: typography.bodySmall.fontSize,
     color: Colors.error,
     fontWeight: '600',
   },
   checklistDescription: {
-    fontSize: typography.sizes.sm,
+    fontSize: typography.bodyMedium.fontSize,
     color: Colors.textSecondary,
     lineHeight: 18,
   },
@@ -833,7 +833,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   summaryText: {
-    fontSize: typography.sizes.md,
+    fontSize: typography.bodyLarge.fontSize,
     fontWeight: '600',
     color: Colors.text,
   },
@@ -853,7 +853,7 @@ const styles = StyleSheet.create({
     marginBottom: spacing.md,
   },
   progressTitle: {
-    fontSize: typography.sizes.lg,
+    fontSize: typography.headingMedium.fontSize,
     fontWeight: '600',
     color: Colors.text,
   },
@@ -865,12 +865,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   progressNumber: {
-    fontSize: typography.sizes.xl,
+    fontSize: typography.displaySmall.fontSize,
     fontWeight: 'bold',
     color: Colors.primary,
   },
   progressLabel: {
-    fontSize: typography.sizes.sm,
+    fontSize: typography.bodyMedium.fontSize,
     color: Colors.textSecondary,
     marginTop: spacing.xs,
   },
@@ -880,7 +880,7 @@ const styles = StyleSheet.create({
     padding: spacing.lg,
   },
   nextStepsTitle: {
-    fontSize: typography.sizes.lg,
+    fontSize: typography.headingMedium.fontSize,
     fontWeight: '600',
     color: Colors.text,
     marginBottom: spacing.md,
@@ -892,7 +892,7 @@ const styles = StyleSheet.create({
     marginBottom: spacing.sm,
   },
   nextStepText: {
-    fontSize: typography.sizes.md,
+    fontSize: typography.bodyLarge.fontSize,
     color: Colors.textSecondary,
   },
   
@@ -918,7 +918,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.gray[400],
   },
   nextButtonText: {
-    fontSize: typography.sizes.lg,
+    fontSize: typography.headingMedium.fontSize,
     fontWeight: '600',
     color: Colors.white,
   },
@@ -933,7 +933,7 @@ const styles = StyleSheet.create({
     ...shadows.medium,
   },
   completeButtonText: {
-    fontSize: typography.sizes.lg,
+    fontSize: typography.headingMedium.fontSize,
     fontWeight: '600',
     color: Colors.white,
   },

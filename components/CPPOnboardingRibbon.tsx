@@ -235,13 +235,13 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   title: {
-    fontSize: typography.sizes.md,
+    fontSize: typography.bodyLarge.fontSize,
     fontWeight: '600',
     color: Colors.white,
     marginBottom: spacing.xs,
   },
   description: {
-    fontSize: typography.sizes.sm,
+    fontSize: typography.bodyMedium.fontSize,
     color: Colors.white + 'CC',
     lineHeight: 16,
   },
@@ -261,7 +261,7 @@ const styles = StyleSheet.create({
     borderColor: Colors.white + '40',
   },
   continueButtonText: {
-    fontSize: typography.sizes.sm,
+    fontSize: typography.bodyMedium.fontSize,
     fontWeight: '600',
     color: Colors.white,
   },
@@ -273,7 +273,7 @@ const styles = StyleSheet.create({
     paddingVertical: spacing.xs,
   },
   snoozeButtonText: {
-    fontSize: typography.sizes.xs,
+    fontSize: typography.bodySmall.fontSize,
     color: Colors.white + 'CC',
   },
   dismissButton: {
@@ -306,7 +306,7 @@ const styles = StyleSheet.create({
     borderRadius: 2,
   },
   progressText: {
-    fontSize: typography.sizes.xs,
+    fontSize: typography.bodySmall.fontSize,
     color: Colors.white + 'CC',
     fontWeight: '500',
   },

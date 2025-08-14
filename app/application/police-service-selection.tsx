@@ -504,13 +504,13 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   title: {
-    fontSize: typography.sizes.xl,
+    fontSize: typography.displaySmall.fontSize,
     fontWeight: 'bold',
     color: Colors.text,
     marginBottom: spacing.xs,
   },
   subtitle: {
-    fontSize: typography.sizes.md,
+    fontSize: typography.bodyLarge.fontSize,
     color: Colors.textSecondary,
     lineHeight: 20,
   },
@@ -535,13 +535,13 @@ const styles = StyleSheet.create({
     marginLeft: spacing.sm,
   },
   infoTitle: {
-    fontSize: typography.sizes.md,
+    fontSize: typography.bodyLarge.fontSize,
     fontWeight: '600',
     color: Colors.primary,
     marginBottom: spacing.xs,
   },
   infoText: {
-    fontSize: typography.sizes.sm,
+    fontSize: typography.bodyMedium.fontSize,
     color: Colors.textSecondary,
     lineHeight: 18,
   },
@@ -563,7 +563,7 @@ const styles = StyleSheet.create({
   searchInput: {
     flex: 1,
     marginLeft: spacing.sm,
-    fontSize: typography.sizes.md,
+    fontSize: typography.bodyLarge.fontSize,
     color: Colors.text,
   },
   
@@ -573,7 +573,7 @@ const styles = StyleSheet.create({
     marginBottom: spacing.lg,
   },
   filterTitle: {
-    fontSize: typography.sizes.md,
+    fontSize: typography.bodyLarge.fontSize,
     fontWeight: '600',
     color: Colors.text,
     marginBottom: spacing.sm,
@@ -599,7 +599,7 @@ const styles = StyleSheet.create({
     borderColor: Colors.primary,
   },
   filterOptionText: {
-    fontSize: typography.sizes.sm,
+    fontSize: typography.bodyMedium.fontSize,
     color: Colors.textSecondary,
   },
   filterOptionTextActive: {
@@ -613,7 +613,7 @@ const styles = StyleSheet.create({
     marginBottom: spacing.lg,
   },
   summaryTitle: {
-    fontSize: typography.sizes.lg,
+    fontSize: typography.headingMedium.fontSize,
     fontWeight: '600',
     color: Colors.text,
     marginBottom: spacing.sm,
@@ -635,13 +635,13 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   selectedServiceName: {
-    fontSize: typography.sizes.md,
+    fontSize: typography.bodyLarge.fontSize,
     fontWeight: '600',
     color: Colors.success,
     marginBottom: spacing.xs,
   },
   selectedServiceLocation: {
-    fontSize: typography.sizes.sm,
+    fontSize: typography.bodyMedium.fontSize,
     color: Colors.textSecondary,
   },
   removeButton: {
@@ -651,7 +651,7 @@ const styles = StyleSheet.create({
     borderRadius: borderRadius.md,
   },
   removeButtonText: {
-    fontSize: typography.sizes.sm,
+    fontSize: typography.bodyMedium.fontSize,
     color: Colors.error,
     fontWeight: '600',
   },
@@ -661,7 +661,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: spacing.lg,
   },
   sectionTitle: {
-    fontSize: typography.sizes.lg,
+    fontSize: typography.headingMedium.fontSize,
     fontWeight: '600',
     color: Colors.text,
     marginBottom: spacing.md,
@@ -695,7 +695,7 @@ const styles = StyleSheet.create({
     marginBottom: spacing.xs,
   },
   serviceName: {
-    fontSize: typography.sizes.lg,
+    fontSize: typography.bodyLarge.fontSize,
     fontWeight: '600',
     color: Colors.text,
     flex: 1,
@@ -713,7 +713,7 @@ const styles = StyleSheet.create({
     borderRadius: borderRadius.sm,
   },
   popularText: {
-    fontSize: typography.sizes.xs,
+    fontSize: typography.bodySmall.fontSize,
     color: Colors.white,
     fontWeight: '600',
   },
@@ -723,7 +723,7 @@ const styles = StyleSheet.create({
     gap: spacing.xs,
   },
   serviceLocation: {
-    fontSize: typography.sizes.sm,
+    fontSize: typography.bodyMedium.fontSize,
     color: Colors.textSecondary,
   },
   serviceLocationSelected: {
@@ -743,7 +743,7 @@ const styles = StyleSheet.create({
     borderColor: Colors.primary,
   },
   serviceDescription: {
-    fontSize: typography.sizes.md,
+    fontSize: typography.bodyMedium.fontSize,
     color: Colors.textSecondary,
     lineHeight: 20,
     marginBottom: spacing.md,
@@ -755,7 +755,7 @@ const styles = StyleSheet.create({
     marginTop: spacing.sm,
   },
   requirementsTitle: {
-    fontSize: typography.sizes.sm,
+    fontSize: typography.bodyMedium.fontSize,
     fontWeight: '600',
     color: Colors.text,
     marginBottom: spacing.xs,
@@ -772,12 +772,12 @@ const styles = StyleSheet.create({
     gap: spacing.xs,
   },
   requirementBullet: {
-    fontSize: typography.sizes.sm,
+    fontSize: typography.bodyMedium.fontSize,
     color: Colors.primary,
     fontWeight: 'bold',
   },
   requirementText: {
-    fontSize: typography.sizes.sm,
+    fontSize: typography.bodyMedium.fontSize,
     color: Colors.textSecondary,
     flex: 1,
   },
@@ -807,7 +807,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.gray[400],
   },
   saveButtonText: {
-    fontSize: typography.sizes.md,
+    fontSize: typography.bodyMedium.fontSize,
     fontWeight: '600',
     color: Colors.white,
   },

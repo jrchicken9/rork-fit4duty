@@ -278,7 +278,7 @@ const styles = StyleSheet.create({
     gap: spacing.sm,
   },
   title: {
-    fontSize: typography.sizes.lg,
+    fontSize: typography.headingMedium.fontSize,
     fontWeight: 'bold',
     color: Colors.white,
   },
@@ -314,12 +314,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   progressPercentage: {
-    fontSize: typography.sizes.xl,
+    fontSize: typography.displaySmall.fontSize,
     fontWeight: 'bold',
     color: Colors.white,
   },
   progressLabel: {
-    fontSize: typography.sizes.sm,
+    fontSize: typography.bodyMedium.fontSize,
     color: Colors.white + 'CC',
     marginTop: 2,
   },
@@ -335,12 +335,12 @@ const styles = StyleSheet.create({
     gap: spacing.xs,
   },
   statNumber: {
-    fontSize: typography.sizes.lg,
+    fontSize: typography.headingMedium.fontSize,
     fontWeight: 'bold',
     color: Colors.white,
   },
   statLabel: {
-    fontSize: typography.sizes.xs,
+    fontSize: typography.bodySmall.fontSize,
     color: Colors.white + 'CC',
   },
   
@@ -349,13 +349,13 @@ const styles = StyleSheet.create({
     marginBottom: spacing.md,
   },
   messageTitle: {
-    fontSize: typography.sizes.md,
+    fontSize: typography.bodyLarge.fontSize,
     fontWeight: '600',
     color: Colors.white,
     marginBottom: spacing.xs,
   },
   messageText: {
-    fontSize: typography.sizes.sm,
+    fontSize: typography.bodyMedium.fontSize,
     color: Colors.white + 'CC',
     lineHeight: 20,
   },
@@ -371,7 +371,7 @@ const styles = StyleSheet.create({
     marginBottom: spacing.xs,
   },
   allowanceTitle: {
-    fontSize: typography.sizes.sm,
+    fontSize: typography.bodyMedium.fontSize,
     color: Colors.white + 'CC',
   },
   allowanceProgress: {
@@ -388,7 +388,7 @@ const styles = StyleSheet.create({
     borderRadius: 3,
   },
   allowanceText: {
-    fontSize: typography.sizes.xs,
+    fontSize: typography.bodySmall.fontSize,
     color: Colors.white + 'CC',
   },
   
@@ -403,7 +403,7 @@ const styles = StyleSheet.create({
     marginBottom: spacing.md,
   },
   upsellText: {
-    fontSize: typography.sizes.sm,
+    fontSize: typography.bodyMedium.fontSize,
     color: Colors.white,
     flex: 1,
   },
@@ -416,7 +416,7 @@ const styles = StyleSheet.create({
     gap: spacing.xs,
   },
   detailsText: {
-    fontSize: typography.sizes.sm,
+    fontSize: typography.bodyMedium.fontSize,
     color: Colors.white + 'CC',
   },
   
@@ -442,11 +442,11 @@ const styles = StyleSheet.create({
     gap: spacing.xs,
   },
   compactTitle: {
-    fontSize: typography.sizes.sm,
+    fontSize: typography.bodyMedium.fontSize,
     fontWeight: '600',
   },
   compactPercentage: {
-    fontSize: typography.sizes.lg,
+    fontSize: typography.headingMedium.fontSize,
     fontWeight: 'bold',
     color: Colors.text,
   },
@@ -471,7 +471,7 @@ const styles = StyleSheet.create({
     gap: spacing.xs,
   },
   compactStatText: {
-    fontSize: typography.sizes.xs,
+    fontSize: typography.bodySmall.fontSize,
     color: Colors.textSecondary,
   },
 });

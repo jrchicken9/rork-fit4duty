@@ -357,7 +357,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   title: {
-    fontSize: typography.sizes.lg,
+    fontSize: typography.headingMedium.fontSize,
     fontWeight: '600',
     marginBottom: spacing.xs,
   },
@@ -367,7 +367,7 @@ const styles = StyleSheet.create({
     gap: spacing.xs,
   },
   categoryText: {
-    fontSize: typography.sizes.sm,
+    fontSize: typography.bodyMedium.fontSize,
     fontWeight: '500',
   },
   weightSection: {
@@ -380,14 +380,14 @@ const styles = StyleSheet.create({
     borderRadius: borderRadius.sm,
   },
   weightText: {
-    fontSize: typography.sizes.sm,
+    fontSize: typography.bodyMedium.fontSize,
     fontWeight: 'bold',
     color: Colors.warning,
   },
   
   // Description
   description: {
-    fontSize: typography.sizes.md,
+    fontSize: typography.bodyLarge.fontSize,
     color: Colors.textSecondary,
     lineHeight: 22,
     marginBottom: spacing.md,
@@ -406,7 +406,7 @@ const styles = StyleSheet.create({
     gap: spacing.xs,
   },
   metaText: {
-    fontSize: typography.sizes.sm,
+    fontSize: typography.bodyMedium.fontSize,
     color: Colors.textSecondary,
   },
   
@@ -415,7 +415,7 @@ const styles = StyleSheet.create({
     marginBottom: spacing.md,
   },
   tipsTitle: {
-    fontSize: typography.sizes.sm,
+    fontSize: typography.bodyMedium.fontSize,
     fontWeight: '600',
     color: Colors.text,
     marginBottom: spacing.xs,
@@ -427,12 +427,12 @@ const styles = StyleSheet.create({
     marginBottom: spacing.xs,
   },
   tipBullet: {
-    fontSize: typography.sizes.sm,
+    fontSize: typography.bodyMedium.fontSize,
     color: Colors.primary,
     fontWeight: 'bold',
   },
   tipText: {
-    fontSize: typography.sizes.sm,
+    fontSize: typography.bodyMedium.fontSize,
     color: Colors.textSecondary,
     flex: 1,
     lineHeight: 18,
@@ -449,7 +449,7 @@ const styles = StyleSheet.create({
     marginBottom: spacing.md,
   },
   upsellText: {
-    fontSize: typography.sizes.sm,
+    fontSize: typography.bodyMedium.fontSize,
     color: Colors.warning,
     flex: 1,
   },
@@ -477,7 +477,7 @@ const styles = StyleSheet.create({
   },
   verifyButtonText: {
     color: Colors.white,
-    fontSize: typography.sizes.sm,
+    fontSize: typography.bodyMedium.fontSize,
     fontWeight: '600',
   },
   completeButton: {
@@ -485,7 +485,7 @@ const styles = StyleSheet.create({
   },
   completeButtonText: {
     color: Colors.white,
-    fontSize: typography.sizes.sm,
+    fontSize: typography.bodyMedium.fontSize,
     fontWeight: '600',
   },
   startButton: {
@@ -495,7 +495,7 @@ const styles = StyleSheet.create({
   },
   startButtonText: {
     color: Colors.primary,
-    fontSize: typography.sizes.sm,
+    fontSize: typography.bodyMedium.fontSize,
     fontWeight: '600',
   },
   
@@ -509,12 +509,12 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   completedText: {
-    fontSize: typography.sizes.md,
+    fontSize: typography.bodyLarge.fontSize,
     fontWeight: '600',
     color: Colors.success,
   },
   completedDate: {
-    fontSize: typography.sizes.sm,
+    fontSize: typography.bodyMedium.fontSize,
     color: Colors.textSecondary,
     marginTop: spacing.xs,
   },
@@ -531,7 +531,7 @@ const styles = StyleSheet.create({
   },
   reviewButtonText: {
     color: Colors.primary,
-    fontSize: typography.sizes.sm,
+    fontSize: typography.bodyMedium.fontSize,
     fontWeight: '600',
   },
   
@@ -558,7 +558,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   compactTitle: {
-    fontSize: typography.sizes.md,
+    fontSize: typography.bodyLarge.fontSize,
     fontWeight: '600',
   },
   compactCategory: {
@@ -567,11 +567,11 @@ const styles = StyleSheet.create({
     gap: spacing.xs,
   },
   compactCategoryText: {
-    fontSize: typography.sizes.xs,
+    fontSize: typography.bodySmall.fontSize,
     color: Colors.textSecondary,
   },
   compactDescription: {
-    fontSize: typography.sizes.sm,
+    fontSize: typography.bodyMedium.fontSize,
     color: Colors.textSecondary,
     marginBottom: spacing.sm,
   },
@@ -586,7 +586,7 @@ const styles = StyleSheet.create({
     gap: spacing.xs,
   },
   compactMetaText: {
-    fontSize: typography.sizes.xs,
+    fontSize: typography.bodySmall.fontSize,
     color: Colors.textSecondary,
   },
   compactWeight: {
@@ -595,7 +595,7 @@ const styles = StyleSheet.create({
     gap: spacing.xs,
   },
   compactWeightText: {
-    fontSize: typography.sizes.xs,
+    fontSize: typography.bodySmall.fontSize,
     color: Colors.warning,
     fontWeight: '600',
   },

@@ -305,12 +305,12 @@ const styles = StyleSheet.create({
     marginBottom: spacing.sm,
   },
   logoText: {
-    fontSize: typography.sizes.xl,
+    fontSize: typography.displaySmall.fontSize,
     fontWeight: 'bold',
     color: Colors.primary,
   },
   welcomeText: {
-    fontSize: typography.sizes.lg,
+    fontSize: typography.headingMedium.fontSize,
     color: Colors.textSecondary,
   },
   
@@ -329,7 +329,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   heroTitle: {
-    fontSize: typography.sizes.xl,
+    fontSize: typography.displaySmall.fontSize,
     fontWeight: 'bold',
     color: Colors.white,
     textAlign: 'center',
@@ -337,7 +337,7 @@ const styles = StyleSheet.create({
     lineHeight: 32,
   },
   heroSubtitle: {
-    fontSize: typography.sizes.md,
+    fontSize: typography.bodyLarge.fontSize,
     color: Colors.white + 'CC',
     textAlign: 'center',
     lineHeight: 24,
@@ -349,7 +349,7 @@ const styles = StyleSheet.create({
     marginBottom: spacing.xl,
   },
   sectionTitle: {
-    fontSize: typography.sizes.lg,
+    fontSize: typography.headingMedium.fontSize,
     fontWeight: '600',
     color: Colors.text,
     marginBottom: spacing.md,
@@ -372,12 +372,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   progressPercentage: {
-    fontSize: typography.sizes.xl,
+    fontSize: typography.displaySmall.fontSize,
     fontWeight: 'bold',
     color: Colors.text,
   },
   progressLabel: {
-    fontSize: typography.sizes.sm,
+    fontSize: typography.bodyMedium.fontSize,
     color: Colors.textSecondary,
     marginTop: 2,
   },
@@ -395,7 +395,7 @@ const styles = StyleSheet.create({
     borderRadius: 6,
   },
   legendText: {
-    fontSize: typography.sizes.sm,
+    fontSize: typography.bodyMedium.fontSize,
     color: Colors.textSecondary,
   },
   
@@ -423,13 +423,13 @@ const styles = StyleSheet.create({
     marginBottom: spacing.md,
   },
   pillarTitle: {
-    fontSize: typography.sizes.lg,
+    fontSize: typography.headingMedium.fontSize,
     fontWeight: '600',
     color: Colors.text,
     marginBottom: spacing.sm,
   },
   pillarDescription: {
-    fontSize: typography.sizes.md,
+    fontSize: typography.bodyLarge.fontSize,
     color: Colors.textSecondary,
     lineHeight: 22,
     marginBottom: spacing.md,
@@ -443,7 +443,7 @@ const styles = StyleSheet.create({
     gap: spacing.xs,
   },
   featureText: {
-    fontSize: typography.sizes.sm,
+    fontSize: typography.bodyMedium.fontSize,
     color: Colors.textSecondary,
   },
   
@@ -466,12 +466,12 @@ const styles = StyleSheet.create({
     marginBottom: spacing.md,
   },
   verificationTitle: {
-    fontSize: typography.sizes.lg,
+    fontSize: typography.headingMedium.fontSize,
     fontWeight: '600',
     color: Colors.warning,
   },
   verificationDescription: {
-    fontSize: typography.sizes.md,
+    fontSize: typography.bodyLarge.fontSize,
     color: Colors.textSecondary,
     lineHeight: 22,
     marginBottom: spacing.sm,
@@ -501,7 +501,7 @@ const styles = StyleSheet.create({
     ...shadows.light,
   },
   benefitTitle: {
-    fontSize: typography.sizes.md,
+    fontSize: typography.bodyLarge.fontSize,
     fontWeight: '600',
     color: Colors.text,
     marginTop: spacing.sm,
@@ -509,7 +509,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   benefitText: {
-    fontSize: typography.sizes.sm,
+    fontSize: typography.bodyMedium.fontSize,
     color: Colors.textSecondary,
     textAlign: 'center',
     lineHeight: 18,
@@ -540,7 +540,7 @@ const styles = StyleSheet.create({
     ...shadows.medium,
   },
   primaryButtonText: {
-    fontSize: typography.sizes.lg,
+    fontSize: typography.headingMedium.fontSize,
     fontWeight: '600',
     color: Colors.white,
   },
@@ -552,7 +552,7 @@ const styles = StyleSheet.create({
     paddingVertical: spacing.sm,
   },
   secondaryButtonText: {
-    fontSize: typography.sizes.md,
+    fontSize: typography.bodyLarge.fontSize,
     color: Colors.textSecondary,
   },
   

@@ -457,12 +457,12 @@ const styles = StyleSheet.create({
     marginBottom: spacing.xs,
   },
   title: {
-    fontSize: typography.sizes.xl,
+    fontSize: typography.displaySmall.fontSize,
     fontWeight: 'bold',
     color: Colors.text,
   },
   subtitle: {
-    fontSize: typography.sizes.md,
+    fontSize: typography.bodyLarge.fontSize,
     color: Colors.textSecondary,
     lineHeight: 20,
   },
@@ -498,11 +498,11 @@ const styles = StyleSheet.create({
     marginBottom: spacing.xs,
   },
   upsellTitle: {
-    fontSize: typography.sizes.md,
+    fontSize: typography.bodyLarge.fontSize,
     fontWeight: '600',
   },
   upsellMessage: {
-    fontSize: typography.sizes.sm,
+    fontSize: typography.bodyMedium.fontSize,
     color: Colors.textSecondary,
     lineHeight: 18,
   },
@@ -517,7 +517,7 @@ const styles = StyleSheet.create({
     ...shadows.light,
   },
   filtersTitle: {
-    fontSize: typography.sizes.lg,
+    fontSize: typography.headingMedium.fontSize,
     fontWeight: '600',
     color: Colors.text,
     marginBottom: spacing.md,
@@ -526,7 +526,7 @@ const styles = StyleSheet.create({
     marginBottom: spacing.md,
   },
   filterLabel: {
-    fontSize: typography.sizes.sm,
+    fontSize: typography.bodyMedium.fontSize,
     fontWeight: '600',
     color: Colors.text,
     marginBottom: spacing.sm,
@@ -549,7 +549,7 @@ const styles = StyleSheet.create({
     borderColor: Colors.primary,
   },
   filterOptionText: {
-    fontSize: typography.sizes.sm,
+    fontSize: typography.bodyMedium.fontSize,
     color: Colors.textSecondary,
   },
   filterOptionTextActive: {
@@ -562,7 +562,7 @@ const styles = StyleSheet.create({
     marginBottom: spacing.lg,
   },
   sectionTitle: {
-    fontSize: typography.sizes.lg,
+    fontSize: typography.headingMedium.fontSize,
     fontWeight: '600',
     color: Colors.text,
     marginHorizontal: spacing.lg,
@@ -596,12 +596,12 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   categoryName: {
-    fontSize: typography.sizes.md,
+    fontSize: typography.bodyLarge.fontSize,
     fontWeight: '600',
     color: Colors.text,
   },
   categoryProgress: {
-    fontSize: typography.sizes.sm,
+    fontSize: typography.bodyMedium.fontSize,
     color: Colors.textSecondary,
   },
   categoryProgressBar: {
@@ -628,7 +628,7 @@ const styles = StyleSheet.create({
     gap: spacing.sm,
   },
   categoryTitle: {
-    fontSize: typography.sizes.lg,
+    fontSize: typography.headingMedium.fontSize,
     fontWeight: '600',
   },
   categoryStats: {
@@ -637,7 +637,7 @@ const styles = StyleSheet.create({
     gap: spacing.sm,
   },
   categoryStatText: {
-    fontSize: typography.sizes.sm,
+    fontSize: typography.bodyMedium.fontSize,
     color: Colors.textSecondary,
   },
   stepsList: {
@@ -665,7 +665,7 @@ const styles = StyleSheet.create({
     ...shadows.light,
   },
   actionButtonText: {
-    fontSize: typography.sizes.sm,
+    fontSize: typography.bodyMedium.fontSize,
     fontWeight: '600',
     color: Colors.text,
   },
