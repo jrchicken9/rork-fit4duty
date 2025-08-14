@@ -16,6 +16,7 @@ import { NotificationProvider } from "@/context/NotificationContext";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import StripeProvider from "@/components/StripeProvider";
 import FirstSignInHandler from "@/components/FirstSignInHandler";
+import { trpc, trpcClient } from "@/lib/trpc";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -24,7 +25,7 @@ const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       staleTime: 5 * 60 * 1000, // 5 minutes
-      cacheTime: 10 * 60 * 1000, // 10 minutes
+      gcTime: 10 * 60 * 1000, // 10 minutes
       retry: 2,
       refetchOnWindowFocus: false,
     },
@@ -101,6 +102,9 @@ function RootLayoutNav() {
       
       {/* Community Management */}
       <Stack.Screen name="admin/community" options={{ title: "Community Management" }} />
+      
+      {/* Backend Test */}
+      <Stack.Screen name="backend-test" options={{ title: "Backend Test" }} />
     </Stack>
       </>
   );
@@ -113,7 +117,8 @@ export default function RootLayout() {
 
   return (
     <ErrorBoundary>
-      <QueryClientProvider client={queryClient}>
+      <trpc.Provider client={trpcClient} queryClient={queryClient}>
+        <QueryClientProvider client={queryClient}>
         <AuthProvider>
           <SubscriptionProvider>
             <CPPProvider>
@@ -139,7 +144,8 @@ export default function RootLayout() {
             </CPPProvider>
           </SubscriptionProvider>
         </AuthProvider>
-      </QueryClientProvider>
+        </QueryClientProvider>
+      </trpc.Provider>
     </ErrorBoundary>
   );
 }
