@@ -562,7 +562,7 @@ const styles = StyleSheet.create({
     color: Colors.textSecondary,
     textAlign: 'center',
   },
-  // Steps Section
+  // Steps Section (Legacy)
   stepsSectionHeader: {
     paddingHorizontal: spacing.md,
     marginBottom: spacing.lg,
@@ -576,7 +576,7 @@ const styles = StyleSheet.create({
     ...typography.bodyLarge,
     color: Colors.textSecondary,
   },
-  stepsContainer: {
+  stepsContainerSpaced: {
     paddingHorizontal: spacing.md,
     gap: spacing.md,
   },
@@ -636,7 +636,7 @@ const styles = StyleSheet.create({
     top: -spacing.sm,
     right: -spacing.sm,
   },
-  premiumBadge: {
+  premiumBadgeWhite: {
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: Colors.white,
@@ -646,7 +646,7 @@ const styles = StyleSheet.create({
     gap: spacing.xs,
     ...shadows.light,
   },
-  premiumBadgeText: {
+  premiumBadgeTextAccent: {
     ...typography.labelSmall,
     color: Colors.accent,
     fontWeight: '700',
