@@ -361,7 +361,7 @@ function ServiceModal({ visible, service, onSave, onClose }: ServiceModalProps) 
     const serviceData = {
       ...formData,
       price: parseFloat(formData.price),
-      features: formData.features.filter(f => f.trim() !== ''),
+      features: formData.features.filter((f: string) => f.trim() !== ''),
     };
 
     onSave(serviceData);
@@ -377,14 +377,14 @@ function ServiceModal({ visible, service, onSave, onClose }: ServiceModalProps) 
   const updateFeature = (index: number, value: string) => {
     setFormData(prev => ({
       ...prev,
-      features: prev.features.map((f, i) => i === index ? value : f)
+      features: prev.features.map((f: string, i: number) => i === index ? value : f)
     }));
   };
 
   const removeFeature = (index: number) => {
     setFormData(prev => ({
       ...prev,
-      features: prev.features.filter((_, i) => i !== index)
+      features: prev.features.filter((_: string, i: number) => i !== index)
     }));
   };
 
@@ -449,7 +449,7 @@ function ServiceModal({ visible, service, onSave, onClose }: ServiceModalProps) 
 
           <View style={styles.formGroup}>
             <Text style={styles.formLabel}>Features</Text>
-            {formData.features.map((feature, index) => (
+            {formData.features.map((feature: string, index: number) => (
               <View key={index} style={styles.featureInputRow}>
                 <TextInput
                   style={[styles.formInput, styles.featureInput]}

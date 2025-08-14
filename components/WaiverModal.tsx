@@ -121,11 +121,11 @@ export default function WaiverModal({
     }
 
     if (!waiverData.agreed_to_terms) {
-      newErrors.agreed_to_terms = 'You must agree to the terms';
+      newErrors.agreed_to_terms = true;
     }
 
     if (!waiverData.age_confirmation) {
-      newErrors.age_confirmation = 'You must confirm you are 18 or older';
+      newErrors.age_confirmation = true;
     }
 
     setErrors(newErrors);

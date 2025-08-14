@@ -228,6 +228,38 @@ export const componentStyles = {
   },
 };
 
+export const helpStyles = {
+  helpCard: {
+    backgroundColor: Colors.white,
+    borderRadius: borderRadius.lg,
+    margin: spacing.sm,
+    padding: spacing.md,
+    ...shadows.light,
+  },
+  helpIcon: {
+    width: 40,
+    height: 40,
+    borderRadius: borderRadius.md,
+    alignItems: 'center' as const,
+    justifyContent: 'center' as const,
+    marginRight: spacing.sm,
+  },
+  helpContent: {
+    flex: 1,
+  },
+  helpTitle: {
+    fontSize: 16,
+    fontWeight: '600' as const,
+    color: Colors.text,
+    marginBottom: spacing.xs,
+  },
+  helpDescription: {
+    fontSize: 14,
+    color: Colors.textSecondary,
+    lineHeight: 20,
+  },
+};
+
 export const layout = {
   // Container styles
   container: {
@@ -284,6 +316,7 @@ export default {
   shadows,
   typography,
   componentStyles,
+  helpStyles,
   layout,
   animations,
   iconSizes,

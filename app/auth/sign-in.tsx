@@ -62,7 +62,7 @@ export default function SignInScreen() {
         if (isAdmin()) {
           router.replace('/admin/dashboard');
         } else {
-          router.replace('/(tabs)');
+          router.replace('/(tabs)/dashboard');
         }
       }, 1500); // Increased delay to ensure profile is loaded
     } else {

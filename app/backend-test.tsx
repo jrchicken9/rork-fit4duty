@@ -7,13 +7,13 @@ export default function BackendTestPage() {
   const [result, setResult] = useState<string>('');
 
   // Test status query
-  const statusQuery = trpc.example.status.useQuery();
+  const statusQuery = trpc.status.useQuery();
 
-  const hiMutation = trpc.example.hi.useMutation({
-    onSuccess: (data) => {
-      setResult(data.message || `Hello ${data.hello}! Server time: ${data.date}`);
+  const hiMutation = trpc.hi.useMutation({
+    onSuccess: (data: { message: string }) => {
+      setResult(data.message);
     },
-    onError: (error) => {
+    onError: (error: any) => {
       Alert.alert('Error', error.message);
     },
   });
@@ -39,7 +39,7 @@ export default function BackendTestPage() {
         ) : statusQuery.error ? (
           <Text style={[styles.statusText, styles.errorText]}>❌ Error: {statusQuery.error.message}</Text>
         ) : statusQuery.data ? (
-          <Text style={[styles.statusText, styles.successText]}>✅ {statusQuery.data.message}</Text>
+          <Text style={[styles.statusText, styles.successText]}>✅ {statusQuery.data.status}</Text>
         ) : null}
       </View>
       

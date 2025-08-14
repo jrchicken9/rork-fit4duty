@@ -325,7 +325,7 @@ export class WaiverService {
       const byteArray = new Uint8Array(byteNumbers);
       return new Blob([byteArray], { type: mimeType });
     } catch (error) {
-      throw new Error(`Failed to convert base64 to blob: ${error.message}`);
+      throw new Error(`Failed to convert base64 to blob: ${(error as Error).message}`);
     }
   }
 

@@ -23,7 +23,7 @@ export default function StripeProvider({ children }: StripeProviderProps) {
       publishableKey={publishableKey}
       merchantIdentifier={merchantIdentifier}
     >
-      {children}
+      {children as React.ReactElement}
     </StripeProviderBase>
   );
 }

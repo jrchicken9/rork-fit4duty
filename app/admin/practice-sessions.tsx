@@ -85,11 +85,11 @@ export default function AdminPracticeSessionsScreen() {
   };
 
   const handleViewBookings = (sessionId: string) => {
-    router.push(`/admin/practice-sessions/${sessionId}/bookings`);
+    router.push(`/admin/session-attendees/${sessionId}`);
   };
 
   const handleEditSession = (sessionId: string) => {
-    router.push(`/admin/practice-sessions/${sessionId}/edit`);
+    router.push(`/admin/practice-sessions/create`);
   };
 
   const handleCreateSession = () => {

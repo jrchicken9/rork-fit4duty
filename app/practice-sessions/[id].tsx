@@ -202,7 +202,7 @@ export default function SessionDetailScreen() {
         {
           paymentMethod: paymentData.paymentMethod,
           paymentIntentId: paymentData.paymentIntentId,
-          transactionId: paymentData.transactionId
+
         } as RobustPaymentData
       );
 
@@ -326,13 +326,13 @@ export default function SessionDetailScreen() {
   console.log('   Session ID:', id);
   console.log('   isBooked (confirmed):', isBooked);
   console.log('   isPendingApproval (pending/approved):', isPendingApproval);
+  // Use the actual booking status from the context
+  const actualIsBooked = isBooked || isPendingApproval;
+  
   console.log('   isWaitlisted:', isWaitlisted);
   console.log('   canBook:', canBook);
   console.log('   actualIsBooked (booked OR pending):', actualIsBooked);
   console.log('   availability:', availability);
-
-  // Use the actual booking status from the context
-  const actualIsBooked = isBooked || isPendingApproval;
 
   return (
     <SafeAreaView style={styles.container}>
@@ -453,10 +453,10 @@ export default function SessionDetailScreen() {
             </View>
             <View style={styles.instructorInfo}>
               <Text style={styles.instructorName}>{session.instructor.full_name}</Text>
-              {session.instructor.rating && (
+              {session.instructor.rating && session.instructor.rating > 0 && (
                 <View style={styles.ratingContainer}>
                   <Star size={16} color="#fbbf24" fill="#fbbf24" />
-                  <Text style={styles.ratingText}>{session.instructor.rating}</Text>
+                  <Text style={styles.ratingText}>{session.instructor.rating?.toFixed(1)}</Text>
                 </View>
               )}
             </View>

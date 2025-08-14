@@ -49,20 +49,20 @@ export default function HeroHeader({
     fallback: getDefaultSubtitle(tab)
   });
 
-  const getGradientColors = () => {
+  const getGradientColors = (): readonly [string, string] => {
     switch (tab) {
       case 'dashboard':
-        return [Colors.tabBackgrounds.dashboard.start, Colors.tabBackgrounds.dashboard.end];
+        return [Colors.tabBackgrounds.dashboard.start, Colors.tabBackgrounds.dashboard.end] as const;
       case 'application':
-        return [Colors.tabBackgrounds.application.start, Colors.tabBackgrounds.application.end];
+        return [Colors.tabBackgrounds.application.start, Colors.tabBackgrounds.application.end] as const;
       case 'fitness':
-        return [Colors.tabBackgrounds.fitness.start, Colors.tabBackgrounds.fitness.end];
+        return [Colors.tabBackgrounds.fitness.start, Colors.tabBackgrounds.fitness.end] as const;
       case 'community':
-        return [Colors.tabBackgrounds.community.start, Colors.tabBackgrounds.community.end];
+        return [Colors.tabBackgrounds.community.start, Colors.tabBackgrounds.community.end] as const;
       case 'profile':
-        return [Colors.tabBackgrounds.profile.start, Colors.tabBackgrounds.profile.end];
+        return [Colors.tabBackgrounds.profile.start, Colors.tabBackgrounds.profile.end] as const;
       default:
-        return [Colors.tabBackgrounds.dashboard.start, Colors.tabBackgrounds.dashboard.end];
+        return [Colors.tabBackgrounds.dashboard.start, Colors.tabBackgrounds.dashboard.end] as const;
     }
   };
 

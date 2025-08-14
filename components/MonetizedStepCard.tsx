@@ -277,9 +277,11 @@ export default function MonetizedStepCard({
         {/* Locked Content Overlay */}
         {isLocked && (
           <LockedContentOverlay
-            message="Complete previous steps to unlock"
+            feature="general"
             onUpgrade={() => router.push('/subscription')}
-          />
+          >
+            <View />
+          </LockedContentOverlay>
         )}
       </View>
 

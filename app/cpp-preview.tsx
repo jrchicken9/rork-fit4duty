@@ -57,11 +57,11 @@ export default function CPPPreviewScreen() {
       await updateProfile({ has_seen_cpp_intro: true });
 
       // Navigate to dashboard
-      router.replace('/(tabs)');
+      router.replace('/(tabs)/dashboard');
     } catch (error) {
       console.error('Error updating CPP intro status:', error);
       // Still navigate to dashboard even if update fails
-      router.replace('/(tabs)');
+      router.replace('/(tabs)/dashboard');
     }
   };
 

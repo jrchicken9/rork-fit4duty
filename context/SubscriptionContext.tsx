@@ -77,7 +77,7 @@ export const [SubscriptionProvider, useSubscription] = createContextHook(() => {
         }
         
         // Ensure tier is valid
-        if (!parsedSubscription.tier || !SUBSCRIPTION_PLANS[parsedSubscription.tier]) {
+        if (!parsedSubscription.tier || !SUBSCRIPTION_PLANS[parsedSubscription.tier as keyof typeof SUBSCRIPTION_PLANS]) {
           parsedSubscription.tier = 'free';
           parsedSubscription.features = SUBSCRIPTION_PLANS.free.features;
         }
@@ -92,7 +92,7 @@ export const [SubscriptionProvider, useSubscription] = createContextHook(() => {
         
         // Ensure features are valid
         if (!parsedSubscription.features) {
-          parsedSubscription.features = SUBSCRIPTION_PLANS[parsedSubscription.tier].features;
+          parsedSubscription.features = SUBSCRIPTION_PLANS[parsedSubscription.tier as keyof typeof SUBSCRIPTION_PLANS].features;
         }
         
         setSubscription(parsedSubscription);
@@ -162,7 +162,7 @@ export const [SubscriptionProvider, useSubscription] = createContextHook(() => {
         
         // Apply promotional offer if available
         if (usePromotionalOffer && !hasUsedPromotionalOffer()) {
-          price = PROMOTIONAL_OFFERS.firstMonthDiscount.discountedPrice;
+          price = PROMOTIONAL_OFFERS.firstMonthDiscount.discountedPrice as 0 | 19.99;
         }
       }
 

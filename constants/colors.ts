@@ -10,6 +10,7 @@ export default {
   // Background Colors
   background: "#F8FAFC", // Light background
   card: "#FFFFFF", // White card background
+  surface: "#F8FAFC", // Surface color for cards
   white: "#FFFFFF", // Pure white
   black: "#000000", // Pure black
   
@@ -17,6 +18,9 @@ export default {
   text: "#1E293B", // Dark text
   textSecondary: "#64748B", // Secondary text
   textTertiary: "#94A3B8", // Tertiary text
+  
+  // Info Colors
+  info: "#0EA5E9", // Info blue color
   
   // Border Colors
   border: "#E2E8F0", // Light border
@@ -115,5 +119,13 @@ export default {
     interviewPrep: "#F59E0B", // Amber
     community: "#EC4899", // Pink
     booking: "#10B981", // Emerald
+  },
+
+  // Help Colors
+  help: {
+    card: "#FEF2F2", // Very light red
+    icon: "#EF4444", // Red for likes
+    title: "#1E293B", // Dark text
+    description: "#64748B", // Secondary text
   },
 };

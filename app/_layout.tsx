@@ -16,21 +16,12 @@ import { NotificationProvider } from "@/context/NotificationContext";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import StripeProvider from "@/components/StripeProvider";
 import FirstSignInHandler from "@/components/FirstSignInHandler";
-import { trpc, trpcClient } from "@/lib/trpc";
+import { trpc, trpcClient, queryClient } from "@/lib/trpc";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      staleTime: 5 * 60 * 1000, // 5 minutes
-      gcTime: 10 * 60 * 1000, // 10 minutes
-      retry: 2,
-      refetchOnWindowFocus: false,
-    },
-  },
-});
+
 
 function RootLayoutNav() {
   return (

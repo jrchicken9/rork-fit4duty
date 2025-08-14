@@ -340,7 +340,7 @@ export default function FitnessScreen() {
           },
           {
             label: "Best Score",
-            value: getPersonalBests().prep || "N/A",
+            value: (getPersonalBests() as any).prep || "N/A",
             icon: <TrendingUp size={16} color={Colors.primary} />
           },
           {
@@ -348,7 +348,7 @@ export default function FitnessScreen() {
             value: testResults.filter(r => {
               const weekAgo = new Date();
               weekAgo.setDate(weekAgo.getDate() - 7);
-              return new Date(r.date) >= weekAgo;
+              return new Date((r as any).date) >= weekAgo;
             }).length,
             icon: <Activity size={16} color={Colors.warning} />
           }

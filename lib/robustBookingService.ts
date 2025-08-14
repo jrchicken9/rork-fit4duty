@@ -180,7 +180,7 @@ export class RobustBookingService {
         .eq('session_id', sessionId)
         .eq('status', 'confirmed');
 
-      if (confirmedBookings >= session.capacity) {
+      if (confirmedBookings && confirmedBookings >= session.capacity) {
         return { valid: false, error: 'Session is full' };
       }
 

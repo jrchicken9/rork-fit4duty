@@ -79,11 +79,11 @@ export default function CPPProgressWidget({
     return Colors.error;
   };
 
-  const getProgressGradient = () => {
-    if (progress.percentage >= 90) return [Colors.success, Colors.success + 'DD'];
-    if (progress.percentage >= 70) return [Colors.primary, Colors.primary + 'DD'];
-    if (progress.percentage >= 40) return [Colors.warning, Colors.warning + 'DD'];
-    return [Colors.error, Colors.error + 'DD'];
+  const getProgressGradient = (): readonly [string, string] => {
+    if (progress.percentage >= 90) return [Colors.success, Colors.success + 'DD'] as const;
+    if (progress.percentage >= 70) return [Colors.primary, Colors.primary + 'DD'] as const;
+    if (progress.percentage >= 40) return [Colors.warning, Colors.warning + 'DD'] as const;
+    return [Colors.error, Colors.error + 'DD'] as const;
   };
 
   if (compact) {
@@ -162,7 +162,7 @@ export default function CPPProgressWidget({
                 style={[
                   styles.progressCircleFill,
                   { 
-                    transform: [{ rotate: `${progressAnim * 3.6}deg` }],
+                    transform: [{ rotate: `${(progressAnim as unknown as number) * 3.6}deg` }],
                     borderColor: Colors.white,
                   }
                 ]} 

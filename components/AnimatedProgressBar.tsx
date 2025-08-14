@@ -40,18 +40,18 @@ export default function AnimatedProgressBar({
     }
   }, [progressValue, animated, duration]);
 
-  const getGradientColors = () => {
+  const getGradientColors = (): readonly [string, string] => {
     switch (variant) {
       case 'success':
-        return [Colors.gradients.success.start, Colors.gradients.success.end];
+        return [Colors.gradients.success.start, Colors.gradients.success.end] as const;
       case 'warning':
-        return [Colors.gradients.warning.start, Colors.gradients.warning.end];
+        return [Colors.gradients.warning.start, Colors.gradients.warning.end] as const;
       case 'error':
-        return [Colors.gradients.error.start, Colors.gradients.error.end];
+        return [Colors.gradients.error.start, Colors.gradients.error.end] as const;
       case 'gradient':
-        return [Colors.gradients.primary.start, Colors.gradients.primary.end];
+        return [Colors.gradients.primary.start, Colors.gradients.primary.end] as const;
       default:
-        return [Colors.primary, Colors.secondary];
+        return [Colors.primary, Colors.secondary] as const;
     }
   };
 

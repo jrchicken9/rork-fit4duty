@@ -176,7 +176,7 @@ export default function CPPScreen() {
             </TouchableOpacity>
             <TouchableOpacity 
               style={styles.headerButton}
-              onPress={() => router.push('/cpp/settings')}
+              onPress={() => router.push('/cpp')}
             >
               <Settings size={20} color={Colors.primary} />
             </TouchableOpacity>
@@ -185,7 +185,7 @@ export default function CPPScreen() {
 
         {/* Main Progress Widget */}
         <CPPProgressWidget 
-          onPress={() => router.push('/cpp/details')}
+          onPress={() => router.push('/cpp')}
           showDetails={true}
         />
 
@@ -340,7 +340,7 @@ export default function CPPScreen() {
         <View style={styles.stepsSection}>
           <Text style={styles.sectionTitle}>CPP Steps</Text>
           {Object.entries(getStepsByCategory()).map(([category, steps]) => {
-            const categoryInfo = CPP_CATEGORIES[category];
+            const categoryInfo = CPP_CATEGORIES[category as keyof typeof CPP_CATEGORIES];
             const isExpanded = expandedCategories.has(category);
             
             return (

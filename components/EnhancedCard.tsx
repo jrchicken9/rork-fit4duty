@@ -36,14 +36,14 @@ export default function EnhancedCard({
     }
   };
 
-  const getGradientColors = () => {
-    if (gradientColors) return gradientColors;
+  const getGradientColors = (): readonly [string, string] => {
+    if (gradientColors) return gradientColors as unknown as readonly [string, string];
     
     switch (variant) {
       case 'gradient':
-        return [Colors.gradients.primary.start, Colors.gradients.primary.end];
+        return [Colors.gradients.primary.start, Colors.gradients.primary.end] as const;
       default:
-        return [Colors.card, Colors.card];
+        return [Colors.card, Colors.card] as const;
     }
   };
 

@@ -1,19 +1,19 @@
 #!/bin/bash
 
 # Quick GitHub Update Script
-echo "🚀 Starting GitHub update..."
+echo "🚀 Starting GitHub update process..."
 
-# Check if there are any changes
+# Check for changes
 if [[ -z $(git status --porcelain) ]]; then
     echo "✅ No changes to commit"
     exit 0
 fi
 
-# Show what files have changed
+# Show what files changed
 echo "📝 Files changed:"
 git status --short
 
-# Ask for commit message
+# Get commit message from user
 echo ""
 read -p "💬 Enter commit message: " commit_message
 
@@ -21,13 +21,16 @@ read -p "💬 Enter commit message: " commit_message
 echo "📦 Adding files..."
 git add .
 
-# Commit with message
+# Commit changes
 echo "💾 Committing changes..."
 git commit -m "$commit_message"
 
+# Pull latest changes
+echo "⬇️  Pulling latest changes..."
+git pull origin main --rebase
+
 # Push to GitHub
-echo "🚀 Pushing to GitHub..."
+echo "⬆️  Pushing to GitHub..."
 git push origin main
 
-echo "✅ Update complete!"
-echo "🌐 Check your repository: https://github.com/YOUR_USERNAME/YOUR_REPO_NAME"
+echo "✅ Update complete! Your changes are now on GitHub."

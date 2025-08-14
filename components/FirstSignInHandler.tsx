@@ -14,7 +14,7 @@ export default function FirstSignInHandler() {
     if (!user) return;
 
     // Don't redirect if already on auth screens
-    const isOnAuthScreen = segments[0] === 'auth' || segments[0] === 'index';
+    const isOnAuthScreen = segments[0] === 'auth' || segments[0] === undefined;
     if (isOnAuthScreen) return;
 
     // Don't redirect if already on CPP screens

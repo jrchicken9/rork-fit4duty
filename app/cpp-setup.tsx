@@ -167,7 +167,7 @@ export default function CPPSetupScreen() {
         { text: 'Cancel', style: 'cancel' },
         { 
           text: 'Go to Dashboard', 
-          onPress: () => router.replace('/(tabs)')
+                      onPress: () => router.replace('/(tabs)/dashboard')
         },
       ]
     );
@@ -241,7 +241,7 @@ export default function CPPSetupScreen() {
         [
           {
             text: 'Go to Dashboard',
-            onPress: () => router.replace('/(tabs)'),
+            onPress: () => router.replace('/(tabs)/dashboard'),
           },
         ]
       );

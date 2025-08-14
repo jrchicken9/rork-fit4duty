@@ -286,7 +286,7 @@ export default function CommunityScreen() {
           },
           {
             label: "Helpful Answers",
-            value: posts.reduce((sum, post) => sum + (post.likes || 0), 0),
+            value: posts.reduce((sum, post) => sum + ((post as any).likes || 0), 0),
             icon: <ThumbsUp size={16} color={Colors.success} />
           }
         ]}

@@ -264,8 +264,8 @@ export const [ApplicationProvider, useApplication] = createContextHook(() => {
     saveApplicationMutation.mutate({
       stepId,
       status: 'not_started',
-      notes: null,
-      completedAt: null,
+              notes: undefined,
+              completedAt: undefined,
     });
   };
 
