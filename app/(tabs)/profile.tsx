@@ -53,7 +53,11 @@ import {
   MoreHorizontal,
   Share2,
   Bookmark,
-  Eye
+  Eye,
+  Crown,
+  Briefcase,
+  CreditCard,
+  CheckCircle
 } from "lucide-react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Colors from "@/constants/colors";
@@ -80,6 +84,21 @@ export default function ProfileScreen() {
   const [isEditing, setIsEditing] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   
+  // Expandable sections state
+  const [expandedSections, setExpandedSections] = useState<{
+    personalInfo: boolean;
+    careerGoals: boolean;
+    premiumTools: boolean;
+    bookings: boolean;
+    settings: boolean;
+  }>({
+    personalInfo: false,
+    careerGoals: false,
+    premiumTools: false,
+    bookings: false,
+    settings: false,
+  });
+  
   // Animation values
   const fadeAnim = new Animated.Value(0);
   const slideAnim = new Animated.Value(50);
@@ -94,6 +113,24 @@ export default function ProfileScreen() {
   const [experienceLevel, setExperienceLevel] = useState(user?.experience_level || "beginner");
 
   const isPremium = false; // Subscription removed - ready for new implementation
+  
+  // Mock bookings data
+  const mockBookings = [
+    {
+      id: 1,
+      date: '2024-01-15',
+      location: 'Toronto Police College',
+      type: 'PREP Test',
+      status: 'confirmed' as const,
+    },
+    {
+      id: 2,
+      date: '2024-01-22',
+      location: 'Vancouver Training Center',
+      type: 'PIN Test',
+      status: 'pending' as const,
+    },
+  ];
 
   // Mock data for progress tracking
   const userProgress = {
@@ -130,6 +167,21 @@ export default function ProfileScreen() {
     if (hour < 12) return 'Good morning';
     if (hour < 18) return 'Good afternoon';
     return 'Good evening';
+  };
+  
+  const getMotivationalMessage = () => {
+    const percentage = Math.round(progress.percentage);
+    if (percentage >= 80) return "You're almost ready for success!";
+    if (percentage >= 60) return "Great progress — keep it up!";
+    if (percentage >= 40) return "You're on the right track!";
+    return "Let's build your path to success!";
+  };
+  
+  const toggleSection = (section: keyof typeof expandedSections) => {
+    setExpandedSections(prev => ({
+      ...prev,
+      [section]: !prev[section]
+    }));
   };
 
 
@@ -186,237 +238,388 @@ export default function ProfileScreen() {
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
-        {/* Hero Section - Inspired by LinkedIn/Instagram */}
+        {/* Hero Section with Gradient Banner */}
         <View style={styles.heroSection}>
           <LinearGradient
-            colors={[Colors.primary, Colors.primary + 'DD']}
+            colors={[Colors.gradients.primaryDark.start, Colors.gradients.primary.end]}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 1 }}
             style={styles.heroGradient}
           >
             {/* Header Actions */}
             <View style={styles.heroHeader}>
               <TouchableOpacity 
-                style={styles.notificationButton} 
+                style={styles.headerButton} 
                 onPress={() => setNotificationPanelVisible(true)}
               >
-                <NotificationBell size={24} onPress={() => setNotificationPanelVisible(true)} />
+                <NotificationBell size={20} onPress={() => setNotificationPanelVisible(true)} />
               </TouchableOpacity>
-              <TouchableOpacity style={styles.moreButton}>
-                <MoreHorizontal size={24} color={Colors.white} />
+              <TouchableOpacity style={styles.headerButton}>
+                <MoreHorizontal size={20} color={Colors.white} />
               </TouchableOpacity>
             </View>
 
-            {/* Profile Picture & Basic Info */}
+            {/* Profile Picture & Basic Info - Center Aligned */}
             <View style={styles.profileHero}>
               <View style={styles.profilePictureContainer}>
                 <View style={styles.profilePicture}>
-                  <User size={40} color={Colors.white} />
+                  <User size={32} color={Colors.primary} />
                 </View>
-
                 <TouchableOpacity style={styles.editPictureButton}>
-                  <Camera size={16} color={Colors.primary} />
+                  <Camera size={12} color={Colors.primary} />
                 </TouchableOpacity>
               </View>
               
               <View style={styles.profileInfo}>
                 <Text style={styles.profileName}>{name || 'Your Name'}</Text>
-                <Text style={styles.profileSubtitle}>Police Officer Candidate</Text>
-                <View style={styles.profileMeta}>
-                  <MapPin size={14} color={Colors.white + 'CC'} />
-                  <Text style={styles.profileLocation}>{location || 'Location not set'}</Text>
+                <View style={styles.cppBadgeContainer}>
+                  <View style={styles.cppBadge}>
+                    <Trophy size={14} color={Colors.accent} />
+                    <Text style={styles.cppBadgeText}>CPP: {Math.round(progress.percentage)}% Complete</Text>
+                  </View>
                 </View>
-              </View>
-            </View>
-
-            {/* CPP Progress Bar */}
-            <View style={styles.completionSection}>
-              <View style={styles.completionHeader}>
-                <Text style={styles.completionTitle}>CPP Progress</Text>
-                <Text style={styles.completionPercentage}>{Math.round(progress.percentage)}%</Text>
-              </View>
-              <View style={styles.progressBar}>
-                <View 
-                  style={[
-                    styles.progressFill, 
-                    { width: `${progress.percentage}%` }
-                  ]} 
-                />
+                <Text style={styles.motivationalText}>{getMotivationalMessage()}</Text>
               </View>
             </View>
           </LinearGradient>
         </View>
 
-        {/* CPP Progress Widget */}
-        <CPPProgressWidget 
-          onPress={() => router.push('/cpp')}
-          compact={true}
-        />
-
-        {/* Quick Stats Cards - Inspired by fitness apps */}
-        <View style={styles.statsSection}>
-          <View style={styles.statsGrid}>
-            <TouchableOpacity style={styles.statCard} onPress={() => router.push('/(tabs)/application')}>
-              <View style={styles.statIcon}>
-                <Target size={20} color={Colors.primary} />
+        {/* Quick Action Row */}
+        <View style={styles.quickActionsSection}>
+          <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.quickActionsContainer}>
+            <TouchableOpacity style={styles.quickActionButton} onPress={() => setIsEditing(true)}>
+              <View style={styles.quickActionIcon}>
+                <Edit3 size={18} color={Colors.primary} />
               </View>
-              <Text style={styles.statNumber}>{userProgress.applicationSteps}/{userProgress.totalSteps}</Text>
-              <Text style={styles.statLabel}>Application Steps</Text>
+              <Text style={styles.quickActionText}>Edit Profile</Text>
             </TouchableOpacity>
-
-            <TouchableOpacity style={styles.statCard} onPress={() => router.push('/(tabs)/fitness')}>
-              <View style={styles.statIcon}>
-                <Dumbbell size={20} color={Colors.success} />
+            
+            <TouchableOpacity style={styles.quickActionButton} onPress={() => router.push('/practice-sessions')}>
+              <View style={styles.quickActionIcon}>
+                <Calendar size={18} color={Colors.success} />
               </View>
-              <Text style={styles.statNumber}>{userProgress.beepTestLevel.toFixed(1)}/{userProgress.targetLevel}</Text>
-              <Text style={styles.statLabel}>Beep Test Level</Text>
+              <Text style={styles.quickActionText}>My Bookings</Text>
             </TouchableOpacity>
-
-            <TouchableOpacity style={styles.statCard} onPress={() => router.push('/practice-sessions')}>
-              <View style={styles.statIcon}>
-                <Calendar size={20} color={Colors.warning} />
+            
+            <TouchableOpacity style={styles.quickActionButton} onPress={() => router.push('/cpp')}>
+              <View style={styles.quickActionIcon}>
+                <Award size={18} color={Colors.warning} />
               </View>
-              <Text style={styles.statNumber}>{userProgress.upcomingSessions}</Text>
-              <Text style={styles.statLabel}>Upcoming Sessions</Text>
+              <Text style={styles.quickActionText}>Certificates</Text>
             </TouchableOpacity>
-
-            <TouchableOpacity style={styles.statCard} onPress={() => router.push('/cpp')}>
-              <View style={styles.statIcon}>
-                <Award size={20} color={Colors.primary} />
+            
+            <TouchableOpacity style={[styles.quickActionButton, styles.premiumActionButton]}>
+              <View style={[styles.quickActionIcon, styles.premiumActionIcon]}>
+                <Crown size={18} color={Colors.accent} />
               </View>
-              <Text style={styles.statNumber}>{progress.verifiedCompletions}/{progress.unverifiedCompletions}</Text>
-              <Text style={styles.statLabel}>Verified/Unverified</Text>
+              <Text style={[styles.quickActionText, styles.premiumActionText]}>Premium Tools</Text>
             </TouchableOpacity>
-          </View>
+          </ScrollView>
         </View>
 
-        {/* Main Content Cards */}
-        <View style={styles.contentSection}>
-          {/* Personal Information Card */}
-          <View style={styles.contentCard}>
-            <View style={styles.cardHeader}>
-              <View style={styles.cardTitleSection}>
-                <User size={20} color={Colors.primary} />
-                <Text style={styles.cardTitle}>Personal Information</Text>
-              </View>
-              <TouchableOpacity 
-                style={styles.editButton} 
-                onPress={() => setIsEditing(true)}
-              >
-                <Edit3 size={16} color={Colors.primary} />
-              </TouchableOpacity>
-            </View>
-            
-            <View style={styles.infoList}>
-              <View style={styles.infoRow}>
-                <Mail size={16} color={Colors.textSecondary} />
-                <Text style={styles.infoLabel}>Email</Text>
-                <Text style={styles.infoValue}>{email}</Text>
-              </View>
-              <View style={styles.infoRow}>
-                <Phone size={16} color={Colors.textSecondary} />
-                <Text style={styles.infoLabel}>Phone</Text>
-                <Text style={styles.infoValue}>{phone || 'Not set'}</Text>
-              </View>
-              <View style={styles.infoRow}>
-                <MapPin size={16} color={Colors.textSecondary} />
-                <Text style={styles.infoLabel}>Location</Text>
-                <Text style={styles.infoValue}>{location || 'Not set'}</Text>
-              </View>
-            </View>
-          </View>
-
-          {/* Goals & Progress Card */}
-          <View style={styles.contentCard}>
-            <View style={styles.cardHeader}>
-              <View style={styles.cardTitleSection}>
-                <Target size={20} color={Colors.primary} />
-                <Text style={styles.cardTitle}>Goals & Progress</Text>
-              </View>
-              <TouchableOpacity style={styles.viewAllButton}>
-                <Text style={styles.viewAllText}>View All</Text>
-                <ChevronRight size={16} color={Colors.primary} />
-              </TouchableOpacity>
-            </View>
-            
-            <View style={styles.goalSection}>
-              <Text style={styles.goalTitle}>Current Goal</Text>
-              <Text style={styles.goalText}>{goal || 'No goal set'}</Text>
-              {targetDate && (
-                <Text style={styles.goalDate}>Target: {targetDate}</Text>
-              )}
-            </View>
-
-            <View style={styles.fitnessSection}>
-              <Text style={styles.sectionTitle}>Fitness Profile</Text>
-              <View style={styles.fitnessStats}>
-                <View style={styles.fitnessStat}>
-                  <Text style={styles.fitnessStatLabel}>Experience</Text>
-                  <Text style={styles.fitnessStatValue}>{experienceLevel.charAt(0).toUpperCase() + experienceLevel.slice(1)}</Text>
+        {/* Expandable Profile Sections */}
+        <View style={styles.sectionsContainer}>
+          {/* Personal Information Section */}
+          <View style={styles.expandableCard}>
+            <TouchableOpacity 
+              style={styles.expandableHeader}
+              onPress={() => toggleSection('personalInfo')}
+            >
+              <View style={styles.expandableHeaderLeft}>
+                <View style={styles.sectionIcon}>
+                  <User size={20} color={Colors.primary} />
                 </View>
-                <View style={styles.fitnessStat}>
-                  <Text style={styles.fitnessStatLabel}>Workouts</Text>
-                  <Text style={styles.fitnessStatValue}>{userProgress.completedWorkouts}</Text>
-                </View>
-                <View style={styles.fitnessStat}>
-                  <Text style={styles.fitnessStatLabel}>Weekly Goal</Text>
-                  <Text style={styles.fitnessStatValue}>{userProgress.weeklyGoal}</Text>
-                </View>
+                <Text style={styles.sectionTitle}>Personal Information</Text>
               </View>
-            </View>
-          </View>
-
-
-
-          {/* Settings Card */}
-          <View style={styles.contentCard}>
-            <View style={styles.cardHeader}>
-              <View style={styles.cardTitleSection}>
-                <Settings size={20} color={Colors.primary} />
-                <Text style={styles.cardTitle}>Settings</Text>
-              </View>
-            </View>
-            
-            <View style={styles.settingsList}>
-              <TouchableOpacity style={styles.settingItem} onPress={handlePasswordReset}>
-                <Key size={20} color={Colors.primary} />
-                <View style={styles.settingContent}>
-                  <Text style={styles.settingTitle}>Reset Password</Text>
-                  <Text style={styles.settingDescription}>Send password reset link to your email</Text>
-                </View>
-                <ChevronRight size={16} color={Colors.textSecondary} />
-              </TouchableOpacity>
-
-              <TouchableOpacity style={styles.settingItem} onPress={handleContactSupport}>
-                <HelpCircle size={20} color={Colors.primary} />
-                <View style={styles.settingContent}>
-                  <Text style={styles.settingTitle}>Help & Support</Text>
-                  <Text style={styles.settingDescription}>Contact our support team</Text>
-                </View>
-                <ChevronRight size={16} color={Colors.textSecondary} />
-              </TouchableOpacity>
-
-              {isAdmin() && (
+              <View style={styles.expandableHeaderRight}>
                 <TouchableOpacity 
-                  style={styles.settingItem} 
-                  onPress={() => router.push('/admin/dashboard')}
+                  style={styles.editIconButton}
+                  onPress={() => setIsEditing(true)}
                 >
-                  <Shield size={20} color={Colors.primary} />
+                  <Edit3 size={16} color={Colors.textSecondary} />
+                </TouchableOpacity>
+                {expandedSections.personalInfo ? 
+                  <ChevronUp size={20} color={Colors.textSecondary} /> : 
+                  <ChevronDown size={20} color={Colors.textSecondary} />
+                }
+              </View>
+            </TouchableOpacity>
+            
+            {expandedSections.personalInfo && (
+              <Animated.View style={styles.expandableContent}>
+                <View style={styles.infoGrid}>
+                  <View style={styles.infoItem}>
+                    <Mail size={16} color={Colors.textSecondary} />
+                    <View style={styles.infoItemContent}>
+                      <Text style={styles.infoLabel}>Email</Text>
+                      <Text style={styles.infoValue}>{email}</Text>
+                    </View>
+                  </View>
+                  <View style={styles.infoItem}>
+                    <Phone size={16} color={Colors.textSecondary} />
+                    <View style={styles.infoItemContent}>
+                      <Text style={styles.infoLabel}>Phone</Text>
+                      <Text style={styles.infoValue}>{phone || 'Not set'}</Text>
+                    </View>
+                  </View>
+                  <View style={styles.infoItem}>
+                    <MapPin size={16} color={Colors.textSecondary} />
+                    <View style={styles.infoItemContent}>
+                      <Text style={styles.infoLabel}>Location</Text>
+                      <Text style={styles.infoValue}>{location || 'Not set'}</Text>
+                    </View>
+                  </View>
+                </View>
+              </Animated.View>
+            )}
+          </View>
+
+          {/* Career & Fitness Goals Section */}
+          <View style={styles.expandableCard}>
+            <TouchableOpacity 
+              style={styles.expandableHeader}
+              onPress={() => toggleSection('careerGoals')}
+            >
+              <View style={styles.expandableHeaderLeft}>
+                <View style={styles.sectionIcon}>
+                  <Target size={20} color={Colors.success} />
+                </View>
+                <Text style={styles.sectionTitle}>Career & Fitness Goals</Text>
+              </View>
+              <View style={styles.expandableHeaderRight}>
+                {expandedSections.careerGoals ? 
+                  <ChevronUp size={20} color={Colors.textSecondary} /> : 
+                  <ChevronDown size={20} color={Colors.textSecondary} />
+                }
+              </View>
+            </TouchableOpacity>
+            
+            {expandedSections.careerGoals && (
+              <Animated.View style={styles.expandableContent}>
+                <View style={styles.goalCard}>
+                  <Text style={styles.goalCardTitle}>Current Goal</Text>
+                  <Text style={styles.goalCardText}>{goal || 'No goal set'}</Text>
+                  {targetDate && (
+                    <Text style={styles.goalCardDate}>Target: {targetDate}</Text>
+                  )}
+                </View>
+                
+                <View style={styles.progressGrid}>
+                  <View style={styles.progressItem}>
+                    <Text style={styles.progressNumber}>{userProgress.applicationSteps}/{userProgress.totalSteps}</Text>
+                    <Text style={styles.progressLabel}>Application Steps</Text>
+                  </View>
+                  <View style={styles.progressItem}>
+                    <Text style={styles.progressNumber}>{userProgress.beepTestLevel.toFixed(1)}</Text>
+                    <Text style={styles.progressLabel}>Beep Test Level</Text>
+                  </View>
+                  <View style={styles.progressItem}>
+                    <Text style={styles.progressNumber}>{userProgress.completedWorkouts}</Text>
+                    <Text style={styles.progressLabel}>Workouts Done</Text>
+                  </View>
+                </View>
+              </Animated.View>
+            )}
+          </View>
+
+          {/* Premium Tools Section */}
+          <View style={[styles.expandableCard, !isPremium && styles.premiumCard]}>
+            <TouchableOpacity 
+              style={styles.expandableHeader}
+              onPress={() => toggleSection('premiumTools')}
+            >
+              <View style={styles.expandableHeaderLeft}>
+                <View style={[styles.sectionIcon, !isPremium && styles.premiumSectionIcon]}>
+                  <Crown size={20} color={isPremium ? Colors.accent : Colors.accent} />
+                </View>
+                <View>
+                  <Text style={[styles.sectionTitle, !isPremium && styles.premiumSectionTitle]}>Premium Tools</Text>
+                  {!isPremium && <Text style={styles.premiumSubtitle}>Unlock advanced features</Text>}
+                </View>
+              </View>
+              <View style={styles.expandableHeaderRight}>
+                {!isPremium && (
+                  <View style={styles.lockBadge}>
+                    <Lock size={12} color={Colors.accent} />
+                  </View>
+                )}
+                {expandedSections.premiumTools ? 
+                  <ChevronUp size={20} color={Colors.textSecondary} /> : 
+                  <ChevronDown size={20} color={Colors.textSecondary} />
+                }
+              </View>
+            </TouchableOpacity>
+            
+            {expandedSections.premiumTools && (
+              <Animated.View style={styles.expandableContent}>
+                {isPremium ? (
+                  <View style={styles.premiumActiveContent}>
+                    <View style={styles.mentorCard}>
+                      <View style={styles.mentorAvatar}>
+                        <UserCheck size={20} color={Colors.primary} />
+                      </View>
+                      <View style={styles.mentorInfo}>
+                        <Text style={styles.mentorName}>Officer Sarah Johnson</Text>
+                        <Text style={styles.mentorRole}>Your Assigned Mentor</Text>
+                      </View>
+                      <TouchableOpacity style={styles.contactButton}>
+                        <MessageCircle size={16} color={Colors.primary} />
+                      </TouchableOpacity>
+                    </View>
+                    
+                    <View style={styles.creditsCard}>
+                      <Text style={styles.creditsTitle}>Remaining Credits</Text>
+                      <Text style={styles.creditsNumber}>2 In-Person Tests</Text>
+                    </View>
+                  </View>
+                ) : (
+                  <View style={styles.premiumUpsellContent}>
+                    <View style={styles.featuresList}>
+                      <View style={styles.featureItem}>
+                        <CheckCircle size={16} color={Colors.success} />
+                        <Text style={styles.featureText}>2 In-Person Practice Tests</Text>
+                      </View>
+                      <View style={styles.featureItem}>
+                        <CheckCircle size={16} color={Colors.success} />
+                        <Text style={styles.featureText}>Personal Mentor Guidance</Text>
+                      </View>
+                      <View style={styles.featureItem}>
+                        <CheckCircle size={16} color={Colors.success} />
+                        <Text style={styles.featureText}>Priority Booking Access</Text>
+                      </View>
+                      <View style={styles.featureItem}>
+                        <CheckCircle size={16} color={Colors.success} />
+                        <Text style={styles.featureText}>Advanced Analytics</Text>
+                      </View>
+                    </View>
+                    
+                    <TouchableOpacity style={styles.upgradeButton}>
+                      <LinearGradient
+                        colors={[Colors.gradients.accent.start, Colors.gradients.accent.end]}
+                        style={styles.upgradeButtonGradient}
+                      >
+                        <Crown size={16} color={Colors.white} />
+                        <Text style={styles.upgradeButtonText}>Upgrade to Premium</Text>
+                      </LinearGradient>
+                    </TouchableOpacity>
+                  </View>
+                )}
+              </Animated.View>
+            )}
+          </View>
+
+          {/* My Bookings Section */}
+          <View style={styles.expandableCard}>
+            <TouchableOpacity 
+              style={styles.expandableHeader}
+              onPress={() => toggleSection('bookings')}
+            >
+              <View style={styles.expandableHeaderLeft}>
+                <View style={styles.sectionIcon}>
+                  <Calendar size={20} color={Colors.info} />
+                </View>
+                <Text style={styles.sectionTitle}>My Bookings</Text>
+              </View>
+              <View style={styles.expandableHeaderRight}>
+                <TouchableOpacity style={styles.viewAllButton}>
+                  <Text style={styles.viewAllText}>View All</Text>
+                </TouchableOpacity>
+                {expandedSections.bookings ? 
+                  <ChevronUp size={20} color={Colors.textSecondary} /> : 
+                  <ChevronDown size={20} color={Colors.textSecondary} />
+                }
+              </View>
+            </TouchableOpacity>
+            
+            {expandedSections.bookings && (
+              <Animated.View style={styles.expandableContent}>
+                {mockBookings.map((booking) => (
+                  <View key={booking.id} style={styles.bookingItem}>
+                    <View style={styles.bookingLeft}>
+                      <View style={[styles.bookingStatus, { backgroundColor: Colors.status[booking.status] + '20' }]}>
+                        <View style={[styles.bookingStatusDot, { backgroundColor: Colors.status[booking.status] }]} />
+                      </View>
+                      <View style={styles.bookingInfo}>
+                        <Text style={styles.bookingType}>{booking.type}</Text>
+                        <Text style={styles.bookingDate}>{booking.date}</Text>
+                        <Text style={styles.bookingLocation}>{booking.location}</Text>
+                      </View>
+                    </View>
+                    <View style={styles.bookingRight}>
+                      <Text style={[styles.bookingStatusText, { color: Colors.status[booking.status] }]}>
+                        {booking.status.charAt(0).toUpperCase() + booking.status.slice(1)}
+                      </Text>
+                    </View>
+                  </View>
+                ))}
+              </Animated.View>
+            )}
+          </View>
+
+          {/* Settings Section */}
+          <View style={styles.expandableCard}>
+            <TouchableOpacity 
+              style={styles.expandableHeader}
+              onPress={() => toggleSection('settings')}
+            >
+              <View style={styles.expandableHeaderLeft}>
+                <View style={styles.sectionIcon}>
+                  <Settings size={20} color={Colors.textSecondary} />
+                </View>
+                <Text style={styles.sectionTitle}>Settings</Text>
+              </View>
+              <View style={styles.expandableHeaderRight}>
+                {expandedSections.settings ? 
+                  <ChevronUp size={20} color={Colors.textSecondary} /> : 
+                  <ChevronDown size={20} color={Colors.textSecondary} />
+                }
+              </View>
+            </TouchableOpacity>
+            
+            {expandedSections.settings && (
+              <Animated.View style={styles.expandableContent}>
+                <TouchableOpacity style={styles.settingItem} onPress={handlePasswordReset}>
+                  <Key size={18} color={Colors.primary} />
                   <View style={styles.settingContent}>
-                    <Text style={styles.settingTitle}>Admin Panel</Text>
-                    <Text style={styles.settingDescription}>Access administrative tools</Text>
+                    <Text style={styles.settingTitle}>Reset Password</Text>
+                    <Text style={styles.settingDescription}>Send reset link to email</Text>
                   </View>
                   <ChevronRight size={16} color={Colors.textSecondary} />
                 </TouchableOpacity>
-              )}
 
-              <TouchableOpacity style={[styles.settingItem, styles.dangerItem]} onPress={handleSignOut}>
-                <LogOut size={20} color={Colors.error} />
-                <View style={styles.settingContent}>
-                  <Text style={[styles.settingTitle, styles.dangerText]}>Sign Out</Text>
-                  <Text style={styles.settingDescription}>Sign out of your account</Text>
-                </View>
-                <ChevronRight size={16} color={Colors.error} />
-              </TouchableOpacity>
-            </View>
+                <TouchableOpacity style={styles.settingItem} onPress={handleContactSupport}>
+                  <HelpCircle size={18} color={Colors.primary} />
+                  <View style={styles.settingContent}>
+                    <Text style={styles.settingTitle}>Help & Support</Text>
+                    <Text style={styles.settingDescription}>Contact our support team</Text>
+                  </View>
+                  <ChevronRight size={16} color={Colors.textSecondary} />
+                </TouchableOpacity>
+
+                {isAdmin() && (
+                  <TouchableOpacity 
+                    style={styles.settingItem} 
+                    onPress={() => router.push('/admin/dashboard')}
+                  >
+                    <Shield size={18} color={Colors.primary} />
+                    <View style={styles.settingContent}>
+                      <Text style={styles.settingTitle}>Admin Panel</Text>
+                      <Text style={styles.settingDescription}>Administrative tools</Text>
+                    </View>
+                    <ChevronRight size={16} color={Colors.textSecondary} />
+                  </TouchableOpacity>
+                )}
+
+                <TouchableOpacity style={[styles.settingItem, styles.dangerItem]} onPress={handleSignOut}>
+                  <LogOut size={18} color={Colors.error} />
+                  <View style={styles.settingContent}>
+                    <Text style={[styles.settingTitle, styles.dangerText]}>Sign Out</Text>
+                    <Text style={styles.settingDescription}>Sign out of your account</Text>
+                  </View>
+                  <ChevronRight size={16} color={Colors.error} />
+                </TouchableOpacity>
+              </Animated.View>
+            )}
           </View>
         </View>
 
@@ -541,50 +744,39 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   
-  // Hero section styles - Inspired by LinkedIn/Instagram
+  // Hero section - Apple Fitness+ inspired
   heroSection: {
-    height: width * 1.2,
-    marginBottom: 20,
+    marginHorizontal: spacing.md,
+    marginTop: spacing.sm,
+    marginBottom: spacing.lg,
   },
   heroGradient: {
-    flex: 1,
-    borderRadius: 20,
-    padding: 20,
+    borderRadius: borderRadius.xl,
+    padding: spacing.lg,
+    minHeight: 200,
     position: 'relative',
   },
   heroHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    position: 'absolute',
-    top: 20,
-    left: 20,
-    right: 20,
-    zIndex: 1,
+    marginBottom: spacing.lg,
   },
-  notificationButton: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
+  headerButton: {
+    width: 36,
+    height: 36,
+    borderRadius: 18,
     backgroundColor: Colors.white + '20',
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  moreButton: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    backgroundColor: Colors.white + '20',
-    justifyContent: 'center',
-    alignItems: 'center',
+    ...shadows.light,
   },
   
-  // Profile hero content
+  // Profile hero - center aligned
   profileHero: {
-    flexDirection: 'row',
     alignItems: 'center',
-    marginTop: 60,
-    position: 'relative',
+    flex: 1,
+    justifyContent: 'center',
   },
   profilePictureContainer: {
     width: 80,
@@ -593,279 +785,420 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.white,
     justifyContent: 'center',
     alignItems: 'center',
-    borderWidth: 2,
-    borderColor: Colors.white,
+    marginBottom: spacing.md,
+    ...shadows.medium,
   },
   profilePicture: {
-    width: 60,
-    height: 60,
-    borderRadius: 30,
+    width: 76,
+    height: 76,
+    borderRadius: 38,
     backgroundColor: Colors.white,
     justifyContent: 'center',
     alignItems: 'center',
   },
-
   editPictureButton: {
     position: 'absolute',
-    bottom: -10,
-    right: -10,
-    width: 32,
-    height: 32,
-    borderRadius: 16,
+    bottom: -4,
+    right: -4,
+    width: 24,
+    height: 24,
+    borderRadius: 12,
     backgroundColor: Colors.white,
     justifyContent: 'center',
     alignItems: 'center',
-    borderWidth: 1,
+    borderWidth: 2,
     borderColor: Colors.primary,
+    ...shadows.light,
   },
   profileInfo: {
-    marginLeft: 20,
-    flex: 1,
+    alignItems: 'center',
   },
   profileName: {
-    fontSize: 24,
-    fontWeight: 'bold',
+    ...typography.headingLarge,
     color: Colors.white,
-    marginBottom: 4,
+    marginBottom: spacing.sm,
+    textAlign: 'center',
   },
-  profileSubtitle: {
-    fontSize: 16,
-    color: Colors.white + 'CC',
-    marginBottom: 8,
+  cppBadgeContainer: {
+    marginBottom: spacing.sm,
   },
-  profileMeta: {
+  cppBadge: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 4,
+    backgroundColor: Colors.white + '20',
+    paddingHorizontal: spacing.md,
+    paddingVertical: spacing.xs,
+    borderRadius: borderRadius.full,
+    gap: spacing.xs,
   },
-  profileLocation: {
-    fontSize: 14,
-    color: Colors.white + 'CC',
-  },
-  
-  // Profile completion section
-  completionSection: {
-    position: 'absolute',
-    bottom: 20,
-    left: 20,
-    right: 20,
-    zIndex: 1,
-  },
-  completionHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 8,
-  },
-  completionTitle: {
-    fontSize: 14,
+  cppBadgeText: {
+    ...typography.labelMedium,
     color: Colors.white,
     fontWeight: '600',
   },
-  completionPercentage: {
-    fontSize: 14,
-    fontWeight: 'bold',
-    color: Colors.white,
-  },
-  progressBar: {
-    height: 8,
-    backgroundColor: Colors.white + '20',
-    borderRadius: 4,
-    overflow: 'hidden',
-  },
-  progressFill: {
-    height: '100%',
-    backgroundColor: Colors.white,
-    borderRadius: 4,
+  motivationalText: {
+    ...typography.bodyMedium,
+    color: Colors.white + 'CC',
+    textAlign: 'center',
   },
   
-  // Quick stats section - Inspired by fitness apps
-  statsSection: {
+  // Quick Actions Row
+  quickActionsSection: {
+    marginBottom: spacing.lg,
+  },
+  quickActionsContainer: {
+    paddingHorizontal: spacing.md,
+    gap: spacing.md,
+  },
+  quickActionButton: {
+    alignItems: 'center',
+    minWidth: 80,
+  },
+  quickActionIcon: {
+    width: 48,
+    height: 48,
+    borderRadius: 24,
     backgroundColor: Colors.white,
-    marginHorizontal: 20,
-    marginBottom: 20,
-    borderRadius: 16,
-    padding: 20,
-    borderWidth: 1,
-    borderColor: Colors.border,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: spacing.xs,
     ...shadows.light,
   },
-  statsGrid: {
+  quickActionText: {
+    ...typography.labelSmall,
+    color: Colors.text,
+    textAlign: 'center',
+  },
+  premiumActionButton: {
+    // Premium styling handled by icon
+  },
+  premiumActionIcon: {
+    backgroundColor: Colors.accent + '10',
+    borderWidth: 1,
+    borderColor: Colors.accent + '30',
+  },
+  premiumActionText: {
+    color: Colors.accent,
+    fontWeight: '600',
+  },
+  
+  // Expandable Sections
+  sectionsContainer: {
+    marginHorizontal: spacing.md,
+    gap: spacing.md,
+  },
+  expandableCard: {
+    backgroundColor: Colors.white,
+    borderRadius: borderRadius.lg,
+    ...shadows.light,
+    overflow: 'hidden',
+  },
+  premiumCard: {
+    borderWidth: 1,
+    borderColor: Colors.accent + '20',
+    ...shadows.premium,
+  },
+  expandableHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    alignItems: 'center',
+    padding: spacing.lg,
   },
-  statCard: {
+  expandableHeaderLeft: {
+    flexDirection: 'row',
     alignItems: 'center',
     flex: 1,
-    marginHorizontal: 8,
   },
-  statIcon: {
+  expandableHeaderRight: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: spacing.sm,
+  },
+  sectionIcon: {
     width: 40,
     height: 40,
     borderRadius: 20,
     backgroundColor: Colors.background,
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 8,
+    marginRight: spacing.md,
   },
-  statNumber: {
-    fontSize: 20,
-    fontWeight: 'bold',
+  premiumSectionIcon: {
+    backgroundColor: Colors.accent + '10',
+  },
+  sectionTitle: {
+    ...typography.headingSmall,
     color: Colors.text,
-    marginBottom: 4,
   },
-  statLabel: {
-    fontSize: 12,
+  premiumSectionTitle: {
+    color: Colors.accent,
+  },
+  premiumSubtitle: {
+    ...typography.bodySmall,
+    color: Colors.textSecondary,
+    marginTop: 2,
+  },
+  editIconButton: {
+    padding: spacing.xs,
+  },
+  lockBadge: {
+    width: 20,
+    height: 20,
+    borderRadius: 10,
+    backgroundColor: Colors.accent + '10',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  expandableContent: {
+    paddingHorizontal: spacing.lg,
+    paddingBottom: spacing.lg,
+  },
+  
+  // Personal Info Content
+  infoGrid: {
+    gap: spacing.md,
+  },
+  infoItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: spacing.sm,
+    borderBottomWidth: 0.5,
+    borderBottomColor: Colors.border,
+  },
+  infoItemContent: {
+    marginLeft: spacing.md,
+    flex: 1,
+  },
+  infoLabel: {
+    ...typography.labelSmall,
+    color: Colors.textSecondary,
+    marginBottom: 2,
+  },
+  infoValue: {
+    ...typography.bodyMedium,
+    color: Colors.text,
+  },
+  
+  // Career Goals Content
+  goalCard: {
+    backgroundColor: Colors.background,
+    borderRadius: borderRadius.md,
+    padding: spacing.md,
+    marginBottom: spacing.md,
+  },
+  goalCardTitle: {
+    ...typography.labelLarge,
+    color: Colors.text,
+    marginBottom: spacing.xs,
+  },
+  goalCardText: {
+    ...typography.bodyMedium,
+    color: Colors.textSecondary,
+    marginBottom: spacing.xs,
+  },
+  goalCardDate: {
+    ...typography.labelSmall,
+    color: Colors.primary,
+  },
+  progressGrid: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+  },
+  progressItem: {
+    alignItems: 'center',
+  },
+  progressNumber: {
+    ...typography.headingMedium,
+    color: Colors.text,
+    marginBottom: spacing.xs,
+  },
+  progressLabel: {
+    ...typography.labelSmall,
     color: Colors.textSecondary,
     textAlign: 'center',
   },
   
-  // Main content cards
-  contentSection: {
-    marginHorizontal: 20,
-    marginBottom: 20,
+  // Premium Tools Content
+  premiumActiveContent: {
+    gap: spacing.md,
   },
-  contentCard: {
-    backgroundColor: Colors.white,
-    borderRadius: 16,
-    padding: 20,
-    marginBottom: 16,
-    borderWidth: 1,
-    borderColor: Colors.border,
-    ...shadows.light,
-  },
-  cardHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 16,
-  },
-  cardTitleSection: {
+  mentorCard: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 8,
+    backgroundColor: Colors.background,
+    borderRadius: borderRadius.md,
+    padding: spacing.md,
   },
-  cardTitle: {
-    fontSize: 18,
-    fontWeight: '600',
-    color: Colors.text,
-  },
-  editButton: {
-    padding: 8,
-  },
-  viewAllButton: {
-    flexDirection: 'row',
+  mentorAvatar: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: Colors.primary + '10',
+    justifyContent: 'center',
     alignItems: 'center',
-    gap: 4,
+    marginRight: spacing.md,
   },
-  viewAllText: {
-    fontSize: 14,
-    color: Colors.primary,
-    fontWeight: '600',
-  },
-  
-  // Info list styles
-  infoList: {
-    marginTop: 16,
-  },
-  infoRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingVertical: 12,
-    borderBottomWidth: 1,
-    borderBottomColor: Colors.border,
-  },
-  infoLabel: {
-    fontSize: 14,
-    color: Colors.textSecondary,
-    width: 80,
-    marginLeft: 12,
-  },
-  infoValue: {
-    fontSize: 14,
-    color: Colors.text,
+  mentorInfo: {
     flex: 1,
   },
-  
-  // Goal and Fitness sections
-  goalSection: {
-    marginBottom: 16,
-  },
-  goalTitle: {
-    fontSize: 16,
-    fontWeight: '600',
+  mentorName: {
+    ...typography.bodyLarge,
     color: Colors.text,
-    marginBottom: 8,
+    fontWeight: '600',
   },
-  goalText: {
-    fontSize: 14,
-    color: Colors.textSecondary,
-    marginBottom: 4,
-  },
-  goalDate: {
-    fontSize: 12,
+  mentorRole: {
+    ...typography.bodySmall,
     color: Colors.textSecondary,
   },
-  fitnessSection: {
-    marginBottom: 16,
-  },
-  sectionTitle: {
-    fontSize: 16,
-    fontWeight: '600',
-    color: Colors.text,
-    marginBottom: 12,
-  },
-  fitnessStats: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-  },
-  fitnessStat: {
+  contactButton: {
+    width: 36,
+    height: 36,
+    borderRadius: 18,
+    backgroundColor: Colors.primary + '10',
+    justifyContent: 'center',
     alignItems: 'center',
   },
-  fitnessStatLabel: {
-    fontSize: 12,
-    color: Colors.textSecondary,
-    marginBottom: 4,
+  creditsCard: {
+    backgroundColor: Colors.success + '10',
+    borderRadius: borderRadius.md,
+    padding: spacing.md,
+    alignItems: 'center',
   },
-  fitnessStatValue: {
-    fontSize: 18,
-    fontWeight: 'bold',
+  creditsTitle: {
+    ...typography.labelMedium,
+    color: Colors.success,
+    marginBottom: spacing.xs,
+  },
+  creditsNumber: {
+    ...typography.headingSmall,
+    color: Colors.success,
+  },
+  
+  // Premium Upsell Content
+  premiumUpsellContent: {
+    gap: spacing.lg,
+  },
+  featuresList: {
+    gap: spacing.md,
+  },
+  featureItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: spacing.sm,
+  },
+  featureText: {
+    ...typography.bodyMedium,
     color: Colors.text,
   },
-  
-
-  
-  // Settings styles
-  settingsList: {
-    marginTop: 16,
+  upgradeButton: {
+    borderRadius: borderRadius.lg,
+    overflow: 'hidden',
+    ...shadows.medium,
   },
+  upgradeButtonGradient: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: spacing.md,
+    paddingHorizontal: spacing.lg,
+    gap: spacing.sm,
+  },
+  upgradeButtonText: {
+    ...typography.labelLarge,
+    color: Colors.white,
+    fontWeight: '600',
+  },
+  
+  // Bookings Content
+  bookingItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: spacing.md,
+    borderBottomWidth: 0.5,
+    borderBottomColor: Colors.border,
+  },
+  bookingLeft: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    flex: 1,
+  },
+  bookingStatus: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: spacing.md,
+  },
+  bookingStatusDot: {
+    width: 8,
+    height: 8,
+    borderRadius: 4,
+  },
+  bookingInfo: {
+    flex: 1,
+  },
+  bookingType: {
+    ...typography.bodyLarge,
+    color: Colors.text,
+    fontWeight: '600',
+  },
+  bookingDate: {
+    ...typography.bodySmall,
+    color: Colors.textSecondary,
+    marginTop: 2,
+  },
+  bookingLocation: {
+    ...typography.bodySmall,
+    color: Colors.textSecondary,
+  },
+  bookingRight: {
+    alignItems: 'flex-end',
+  },
+  bookingStatusText: {
+    ...typography.labelSmall,
+    fontWeight: '600',
+    textTransform: 'capitalize',
+  },
+  
+  // Settings Content
   settingItem: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingVertical: 16,
-    paddingHorizontal: 16,
-    borderBottomWidth: 1,
+    paddingVertical: spacing.md,
+    borderBottomWidth: 0.5,
     borderBottomColor: Colors.border,
   },
   settingContent: {
     flex: 1,
-    marginLeft: 12,
+    marginLeft: spacing.md,
   },
   settingTitle: {
-    fontSize: 16,
-    fontWeight: '600',
+    ...typography.bodyLarge,
     color: Colors.text,
-    marginBottom: 4,
+    fontWeight: '600',
   },
   settingDescription: {
-    fontSize: 14,
+    ...typography.bodySmall,
     color: Colors.textSecondary,
+    marginTop: 2,
   },
   dangerItem: {
-    borderColor: '#EF444430',
+    // Styling handled by text color
   },
   dangerText: {
     color: Colors.error,
+  },
+  
+  // View All Button
+  viewAllButton: {
+    paddingHorizontal: spacing.sm,
+    paddingVertical: spacing.xs,
+  },
+  viewAllText: {
+    ...typography.labelSmall,
+    color: Colors.primary,
+    fontWeight: '600',
   },
   
   // Edit modal styles
