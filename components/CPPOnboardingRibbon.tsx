@@ -9,10 +9,7 @@ import {
 import { 
   Award, 
   ArrowRight, 
-  X, 
-  Clock,
-  Star,
-  TrendingUp
+  Clock
 } from 'lucide-react-native';
 import { useAuth } from '@/context/AuthContext';
 import { useCPP } from '@/context/CPPContext';
@@ -33,7 +30,7 @@ export default function CPPOnboardingRibbon({ onDismiss }: CPPOnboardingRibbonPr
   const { progress } = useCPP();
   
   const [isVisible, setIsVisible] = useState(false);
-  const [isSnoozed, setIsSnoozed] = useState(false);
+
   const slideAnim = React.useRef(new Animated.Value(-100)).current;
 
   useEffect(() => {
@@ -71,7 +68,6 @@ export default function CPPOnboardingRibbon({ onDismiss }: CPPOnboardingRibbonPr
         const { timestamp } = JSON.parse(snoozeData);
         const now = Date.now();
         if (now - timestamp < SNOOZE_DURATION) {
-          setIsSnoozed(true);
           setIsVisible(false);
           return;
         } else {
@@ -107,17 +103,13 @@ export default function CPPOnboardingRibbon({ onDismiss }: CPPOnboardingRibbonPr
         userId: user?.id,
       };
       await AsyncStorage.setItem(SNOOZE_KEY, JSON.stringify(snoozeData));
-      setIsSnoozed(true);
       setIsVisible(false);
     } catch (error) {
       console.error('Error snoozing onboarding ribbon:', error);
     }
   };
 
-  const handleDismiss = () => {
-    setIsVisible(false);
-    onDismiss?.();
-  };
+
 
   if (!isVisible) {
     return null;
@@ -174,13 +166,7 @@ export default function CPPOnboardingRibbon({ onDismiss }: CPPOnboardingRibbonPr
           </View>
         </View>
         
-        <TouchableOpacity
-          style={styles.dismissButton}
-          onPress={handleDismiss}
-          activeOpacity={0.8}
-        >
-          <X size={16} color={Colors.white + 'CC'} />
-        </TouchableOpacity>
+
       </View>
       
       {/* Progress indicator for existing users */}
@@ -277,15 +263,7 @@ const styles = StyleSheet.create({
     fontSize: typography.bodySmall.fontSize,
     color: Colors.white + 'CC',
   },
-  dismissButton: {
-    width: 24,
-    height: 24,
-    borderRadius: 12,
-    backgroundColor: Colors.white + '20',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginLeft: spacing.sm,
-  },
+
   progressSection: {
     backgroundColor: Colors.primary + 'DD',
     paddingHorizontal: spacing.lg,
