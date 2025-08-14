@@ -1,14 +1,17 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, ScrollView } from 'react-native';
 import { trpc } from '@/lib/trpc';
 
 export default function BackendTestPage() {
   const [name, setName] = useState<string>('');
   const [result, setResult] = useState<string>('');
 
+  // Test status query
+  const statusQuery = trpc.example.status.useQuery();
+
   const hiMutation = trpc.example.hi.useMutation({
     onSuccess: (data) => {
-      setResult(`Hello ${data.hello}! Server time: ${data.date}`);
+      setResult(data.message || `Hello ${data.hello}! Server time: ${data.date}`);
     },
     onError: (error) => {
       Alert.alert('Error', error.message);
@@ -24,9 +27,21 @@ export default function BackendTestPage() {
   };
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
       <Text style={styles.title}>Backend Test</Text>
       <Text style={styles.subtitle}>Test the tRPC connection</Text>
+      
+      {/* Backend Status */}
+      <View style={styles.statusContainer}>
+        <Text style={styles.statusTitle}>Backend Status:</Text>
+        {statusQuery.isLoading ? (
+          <Text style={styles.statusText}>Checking...</Text>
+        ) : statusQuery.error ? (
+          <Text style={[styles.statusText, styles.errorText]}>❌ Error: {statusQuery.error.message}</Text>
+        ) : statusQuery.data ? (
+          <Text style={[styles.statusText, styles.successText]}>✅ {statusQuery.data.message}</Text>
+        ) : null}
+      </View>
       
       <TextInput
         style={styles.input}
@@ -52,16 +67,19 @@ export default function BackendTestPage() {
           <Text style={styles.resultText}>{result}</Text>
         </View>
       ) : null}
-    </View>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
     backgroundColor: '#f5f5f5',
+  },
+  contentContainer: {
+    padding: 20,
     justifyContent: 'center',
+    minHeight: '100%',
   },
   title: {
     fontSize: 24,
@@ -73,8 +91,32 @@ const styles = StyleSheet.create({
   subtitle: {
     fontSize: 16,
     textAlign: 'center',
-    marginBottom: 32,
+    marginBottom: 24,
     color: '#666',
+  },
+  statusContainer: {
+    backgroundColor: 'white',
+    borderRadius: 8,
+    padding: 16,
+    marginBottom: 24,
+    borderWidth: 1,
+    borderColor: '#ddd',
+  },
+  statusTitle: {
+    fontSize: 16,
+    fontWeight: '600',
+    marginBottom: 8,
+    color: '#333',
+  },
+  statusText: {
+    fontSize: 14,
+    color: '#666',
+  },
+  successText: {
+    color: '#28a745',
+  },
+  errorText: {
+    color: '#dc3545',
   },
   input: {
     backgroundColor: 'white',
