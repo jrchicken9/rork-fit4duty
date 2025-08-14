@@ -121,42 +121,110 @@ export default function DashboardScreen() {
     
     try {
       setLoadingBookings(true);
+      console.log('🔄 Loading upcoming bookings for user:', authUser.id);
+      
+      // First, let's try a simpler query to see if the tables exist
+      const { data: testData, error: testError } = await supabase
+        .from('bookings')
+        .select('id, status, user_id')
+        .limit(1);
+      
+      if (testError) {
+        console.error('❌ Bookings table test failed:', testError);
+        // If bookings table doesn't exist, just set empty array
+        setUpcomingBookings([]);
+        return;
+      }
+      
+      console.log('✅ Bookings table exists, proceeding with full query');
+      
+      // Now try the full query with proper error handling
       const { data, error } = await supabase
         .from('bookings')
         .select(`
           id,
           status,
-          practice_sessions!inner(
+          session_id,
+          practice_sessions(
+            id,
             title,
             session_date,
             start_time,
             end_time,
             test_type,
-            locations!inner(name)
+            location_id,
+            locations(
+              id,
+              name
+            )
           )
         `)
         .eq('user_id', authUser.id)
         .in('status', ['pending', 'approved', 'confirmed'])
-        .gte('practice_sessions.session_date', new Date().toISOString().split('T')[0])
-        .order('session_date', { ascending: true })
-        .limit(2); // Reduced from 3 to 2 to avoid overwhelming
+        .order('created_at', { ascending: false })
+        .limit(5);
 
-      if (error) throw error;
+      if (error) {
+        console.error('❌ Error in bookings query:', error);
+        // Don't throw, just log and set empty array
+        setUpcomingBookings([]);
+        return;
+      }
 
-      const formattedBookings: UpcomingBooking[] = data?.map((booking: any) => ({
-        id: booking.id,
-        session_title: booking.practice_sessions.title,
-        session_date: booking.practice_sessions.session_date,
-        start_time: booking.practice_sessions.start_time,
-        end_time: booking.practice_sessions.end_time,
-        status: booking.status,
-        test_type: booking.practice_sessions.test_type,
-        location_name: booking.practice_sessions.locations.name,
-      })) || [];
+      console.log('📊 Raw bookings data:', data);
+      
+      if (!data || data.length === 0) {
+        console.log('📝 No bookings found for user');
+        setUpcomingBookings([]);
+        return;
+      }
 
+      // Filter and format bookings with better error handling
+      const formattedBookings: UpcomingBooking[] = data
+        .filter((booking: any) => {
+          // Only include bookings with valid session data and future dates
+          if (!booking.practice_sessions) {
+            console.warn('⚠️ Booking missing session data:', booking.id);
+            return false;
+          }
+          
+          const sessionDate = booking.practice_sessions.session_date;
+          if (!sessionDate) {
+            console.warn('⚠️ Session missing date:', booking.practice_sessions.id);
+            return false;
+          }
+          
+          // Check if session is in the future
+          const today = new Date().toISOString().split('T')[0];
+          return sessionDate >= today;
+        })
+        .map((booking: any) => {
+          const session = booking.practice_sessions;
+          return {
+            id: booking.id,
+            session_title: session.title || 'Practice Session',
+            session_date: session.session_date,
+            start_time: session.start_time || '09:00',
+            end_time: session.end_time || '10:00',
+            status: booking.status,
+            test_type: session.test_type || 'PREP',
+            location_name: session.locations?.name || 'Location TBD',
+          };
+        })
+        .slice(0, 2); // Limit to 2 most recent
+
+      console.log('✅ Formatted bookings:', formattedBookings.length);
       setUpcomingBookings(formattedBookings);
-    } catch (error) {
-      console.error('Error loading upcoming bookings:', error);
+      
+    } catch (error: any) {
+      console.error('❌ Error loading upcoming bookings:', {
+        message: error.message,
+        code: error.code,
+        details: error.details,
+        hint: error.hint
+      });
+      // Always set empty array on error to prevent UI crashes
+      setUpcomingBookings([]);
     } finally {
       setLoadingBookings(false);
     }

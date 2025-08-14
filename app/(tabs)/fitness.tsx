@@ -199,15 +199,27 @@ export default function FitnessScreen() {
     try {
       console.log('🔄 Loading bookings for user:', user.id);
       
-      const [userBookings, _] = await Promise.all([
-        RobustBookingService.getUserBookings(),
-        loadContextBookings()
-      ]);
+      // First try to load from context (which handles database errors gracefully)
+      await loadContextBookings();
       
-      console.log('📊 Bookings loaded:', userBookings?.length || 0);
-      setBookings(userBookings || []);
-    } catch (error) {
-      console.error('❌ Error loading bookings:', error);
+      // Then try to get user bookings with error handling
+      try {
+        const userBookings = await RobustBookingService.getUserBookings();
+        console.log('📊 Bookings loaded:', userBookings?.length || 0);
+        setBookings(userBookings || []);
+      } catch (bookingError: any) {
+        console.warn('⚠️ RobustBookingService failed, using empty array:', bookingError.message);
+        setBookings([]);
+      }
+      
+    } catch (error: any) {
+      console.error('❌ Error loading bookings:', {
+        message: error.message,
+        code: error.code,
+        details: error.details
+      });
+      // Always set empty array on error to prevent UI crashes
+      setBookings([]);
     } finally {
       setBookingsLoading(false);
     }
