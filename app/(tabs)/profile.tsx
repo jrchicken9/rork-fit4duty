@@ -69,6 +69,7 @@ import { useCPP } from "@/context/CPPContext";
 import NotificationBell from "@/components/NotificationBell";
 import NotificationPanel from "@/components/NotificationPanel";
 import CPPProgressWidget from "@/components/CPPProgressWidget";
+import CPPProgressBadges from "@/components/CPPProgressBadges";
 import { router } from "expo-router";
 import { supabase } from "@/lib/supabase";
 import Logo from "@/components/Logo";
@@ -273,10 +274,12 @@ export default function ProfileScreen() {
               <View style={styles.profileInfo}>
                 <Text style={styles.profileName}>{name || 'Your Name'}</Text>
                 <View style={styles.cppBadgeContainer}>
-                  <View style={styles.cppBadge}>
-                    <Trophy size={14} color={Colors.accent} />
-                    <Text style={styles.cppBadgeText}>CPP: {Math.round(progress.percentage)}% Complete</Text>
-                  </View>
+                  <CPPProgressBadges 
+                    percentage={progress.percentage} 
+                    size="small" 
+                    showLabels={false}
+                    horizontal={true}
+                  />
                 </View>
                 <Text style={styles.motivationalText}>{getMotivationalMessage()}</Text>
               </View>
@@ -417,6 +420,17 @@ export default function ProfileScreen() {
                     <Text style={styles.progressNumber}>{userProgress.completedWorkouts}</Text>
                     <Text style={styles.progressLabel}>Workouts Done</Text>
                   </View>
+                </View>
+                
+                {/* CPP Achievement Badges */}
+                <View style={styles.achievementSection}>
+                  <Text style={styles.achievementTitle}>Achievement Badges</Text>
+                  <CPPProgressBadges 
+                    percentage={progress.percentage} 
+                    size="small" 
+                    showLabels={true}
+                    horizontal={false}
+                  />
                 </View>
               </Animated.View>
             )}
@@ -1013,6 +1027,21 @@ const styles = StyleSheet.create({
   progressLabel: {
     ...typography.labelSmall,
     color: Colors.textSecondary,
+    textAlign: 'center',
+  },
+  
+  // Achievement Badges Section
+  achievementSection: {
+    marginTop: spacing.lg,
+    paddingTop: spacing.lg,
+    borderTopWidth: 0.5,
+    borderTopColor: Colors.border,
+  },
+  achievementTitle: {
+    ...typography.labelLarge,
+    color: Colors.text,
+    fontWeight: '600',
+    marginBottom: spacing.md,
     textAlign: 'center',
   },
   
