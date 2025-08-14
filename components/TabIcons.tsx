@@ -7,13 +7,11 @@ import {
   Users, 
   User,
   Target,
-  Award,
   Shield,
   Heart,
   Star
 } from 'lucide-react-native';
 import Colors from '@/constants/colors';
-import { iconSizes } from '@/constants/designSystem';
 
 interface TabIconProps {
   name: 'dashboard' | 'application' | 'fitness' | 'community' | 'profile';
@@ -23,23 +21,31 @@ interface TabIconProps {
 
 export default function TabIcon({ name, focused, size = 24 }: TabIconProps) {
   const iconColor = focused ? Colors.primary : Colors.textSecondary;
-  const bgColor = focused ? Colors.primary + '15' : 'transparent';
+  const bgColor = focused ? Colors.primary + '12' : 'transparent';
 
   const renderIcon = () => {
     switch (name) {
       case 'dashboard':
         return (
-          <View style={[styles.iconContainer, { backgroundColor: bgColor }]}>
-            <Home size={size} color={iconColor} />
+          <View style={[styles.iconContainer, { 
+            backgroundColor: bgColor,
+            borderColor: focused ? Colors.primary + '25' : 'transparent',
+            transform: focused ? [{ scale: 1.05 }] : [{ scale: 1 }]
+          }]}>
+            <Home size={size} color={iconColor} strokeWidth={focused ? 2.5 : 2} />
             {focused && <View style={[styles.activeIndicator, { backgroundColor: Colors.primary }]} />}
           </View>
         );
       
       case 'application':
         return (
-          <View style={[styles.iconContainer, { backgroundColor: bgColor }]}>
+          <View style={[styles.iconContainer, { 
+            backgroundColor: bgColor,
+            borderColor: focused ? Colors.accent + '25' : 'transparent',
+            transform: focused ? [{ scale: 1.05 }] : [{ scale: 1 }]
+          }]}>
             <View style={styles.applicationIcon}>
-              <FileText size={size * 0.8} color={iconColor} />
+              <FileText size={size * 0.8} color={iconColor} strokeWidth={focused ? 2.5 : 2} />
               <Target size={size * 0.4} color={Colors.accent} style={styles.overlayIcon} />
             </View>
             {focused && <View style={[styles.activeIndicator, { backgroundColor: Colors.accent }]} />}
@@ -48,9 +54,13 @@ export default function TabIcon({ name, focused, size = 24 }: TabIconProps) {
       
       case 'fitness':
         return (
-          <View style={[styles.iconContainer, { backgroundColor: bgColor }]}>
+          <View style={[styles.iconContainer, { 
+            backgroundColor: bgColor,
+            borderColor: focused ? Colors.success + '25' : 'transparent',
+            transform: focused ? [{ scale: 1.05 }] : [{ scale: 1 }]
+          }]}>
             <View style={styles.fitnessIcon}>
-              <Dumbbell size={size * 0.8} color={iconColor} />
+              <Dumbbell size={size * 0.8} color={iconColor} strokeWidth={focused ? 2.5 : 2} />
               <Heart size={size * 0.4} color={Colors.success} style={styles.overlayIcon} />
             </View>
             {focused && <View style={[styles.activeIndicator, { backgroundColor: Colors.success }]} />}
@@ -59,9 +69,13 @@ export default function TabIcon({ name, focused, size = 24 }: TabIconProps) {
       
       case 'community':
         return (
-          <View style={[styles.iconContainer, { backgroundColor: bgColor }]}>
+          <View style={[styles.iconContainer, { 
+            backgroundColor: bgColor,
+            borderColor: focused ? Colors.warning + '25' : 'transparent',
+            transform: focused ? [{ scale: 1.05 }] : [{ scale: 1 }]
+          }]}>
             <View style={styles.communityIcon}>
-              <Users size={size * 0.8} color={iconColor} />
+              <Users size={size * 0.8} color={iconColor} strokeWidth={focused ? 2.5 : 2} />
               <Star size={size * 0.4} color={Colors.warning} style={styles.overlayIcon} />
             </View>
             {focused && <View style={[styles.activeIndicator, { backgroundColor: Colors.warning }]} />}
@@ -70,9 +84,13 @@ export default function TabIcon({ name, focused, size = 24 }: TabIconProps) {
       
       case 'profile':
         return (
-          <View style={[styles.iconContainer, { backgroundColor: bgColor }]}>
+          <View style={[styles.iconContainer, { 
+            backgroundColor: bgColor,
+            borderColor: focused ? Colors.secondary + '25' : 'transparent',
+            transform: focused ? [{ scale: 1.05 }] : [{ scale: 1 }]
+          }]}>
             <View style={styles.profileIcon}>
-              <User size={size * 0.8} color={iconColor} />
+              <User size={size * 0.8} color={iconColor} strokeWidth={focused ? 2.5 : 2} />
               <Shield size={size * 0.4} color={Colors.secondary} style={styles.overlayIcon} />
             </View>
             {focused && <View style={[styles.activeIndicator, { backgroundColor: Colors.secondary }]} />}
@@ -91,9 +109,13 @@ const styles = StyleSheet.create({
   iconContainer: {
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius: 12,
-    padding: 4,
+    borderRadius: 16,
+    padding: 8,
     position: 'relative',
+    minWidth: 48,
+    minHeight: 48,
+    borderWidth: 1,
+    borderColor: 'transparent',
   },
   applicationIcon: {
     position: 'relative',
@@ -122,9 +144,14 @@ const styles = StyleSheet.create({
   },
   activeIndicator: {
     position: 'absolute',
-    bottom: -2,
-    width: 4,
-    height: 4,
-    borderRadius: 2,
+    bottom: -4,
+    width: 6,
+    height: 6,
+    borderRadius: 3,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.2,
+    shadowRadius: 2,
+    elevation: 2,
   },
 });

@@ -22,31 +22,38 @@ export const borderRadius = {
 export const shadows = {
   light: {
     shadowColor: Colors.shadows.light,
-    shadowOffset: { width: 0, height: 2 },
+    shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 1,
-    shadowRadius: 4,
-    elevation: 2,
+    shadowRadius: 3,
+    elevation: 1,
   },
   medium: {
     shadowColor: Colors.shadows.medium,
-    shadowOffset: { width: 0, height: 4 },
+    shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 1,
-    shadowRadius: 8,
-    elevation: 4,
+    shadowRadius: 6,
+    elevation: 3,
   },
   heavy: {
     shadowColor: Colors.shadows.heavy,
-    shadowOffset: { width: 0, height: 8 },
-    shadowOpacity: 1,
-    shadowRadius: 16,
-    elevation: 8,
-  },
-  colored: {
-    shadowColor: Colors.shadows.colored,
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 1,
     shadowRadius: 12,
     elevation: 6,
+  },
+  colored: {
+    shadowColor: Colors.shadows.colored,
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 1,
+    shadowRadius: 8,
+    elevation: 4,
+  },
+  premium: {
+    shadowColor: Colors.shadows.premium,
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 1,
+    shadowRadius: 10,
+    elevation: 5,
   },
 };
 
@@ -130,17 +137,21 @@ export const typography = {
 };
 
 export const componentStyles = {
-  // Card styles
+  // Enhanced Card styles
   card: {
     backgroundColor: Colors.card,
     borderRadius: borderRadius.lg,
     padding: spacing.md,
+    borderWidth: 0.5,
+    borderColor: Colors.border + '40',
     ...shadows.light,
   },
   cardElevated: {
     backgroundColor: Colors.card,
     borderRadius: borderRadius.lg,
     padding: spacing.md,
+    borderWidth: 0.5,
+    borderColor: Colors.border + '20',
     ...shadows.medium,
   },
   cardHeavy: {
@@ -149,54 +160,84 @@ export const componentStyles = {
     padding: spacing.md,
     ...shadows.heavy,
   },
+  cardPremium: {
+    backgroundColor: Colors.card,
+    borderRadius: borderRadius.xl,
+    padding: spacing.lg,
+    borderWidth: 1,
+    borderColor: Colors.primary + '10',
+    ...shadows.premium,
+  },
 
-  // Button styles
+  // Enhanced Button styles
   button: {
     primary: {
       backgroundColor: Colors.primary,
-      borderRadius: borderRadius.md,
-      paddingVertical: spacing.sm,
-      paddingHorizontal: spacing.md,
+      borderRadius: borderRadius.lg,
+      paddingVertical: spacing.md,
+      paddingHorizontal: spacing.lg,
       alignItems: 'center' as const,
       justifyContent: 'center' as const,
+      ...shadows.medium,
     },
     secondary: {
       backgroundColor: Colors.secondary,
-      borderRadius: borderRadius.md,
-      paddingVertical: spacing.sm,
-      paddingHorizontal: spacing.md,
+      borderRadius: borderRadius.lg,
+      paddingVertical: spacing.md,
+      paddingHorizontal: spacing.lg,
       alignItems: 'center' as const,
       justifyContent: 'center' as const,
+      ...shadows.light,
     },
     outline: {
       backgroundColor: 'transparent',
-      borderWidth: 1,
+      borderWidth: 1.5,
       borderColor: Colors.primary,
-      borderRadius: borderRadius.md,
-      paddingVertical: spacing.sm,
-      paddingHorizontal: spacing.md,
+      borderRadius: borderRadius.lg,
+      paddingVertical: spacing.md,
+      paddingHorizontal: spacing.lg,
       alignItems: 'center' as const,
       justifyContent: 'center' as const,
     },
     ghost: {
-      backgroundColor: 'transparent',
-      borderRadius: borderRadius.md,
-      paddingVertical: spacing.sm,
-      paddingHorizontal: spacing.md,
+      backgroundColor: Colors.primary + '08',
+      borderRadius: borderRadius.lg,
+      paddingVertical: spacing.md,
+      paddingHorizontal: spacing.lg,
       alignItems: 'center' as const,
       justifyContent: 'center' as const,
     },
+    premium: {
+      backgroundColor: Colors.accent,
+      borderRadius: borderRadius.lg,
+      paddingVertical: spacing.md,
+      paddingHorizontal: spacing.lg,
+      alignItems: 'center' as const,
+      justifyContent: 'center' as const,
+      ...shadows.colored,
+    },
   },
 
-  // Input styles
+  // Enhanced Input styles
   input: {
     backgroundColor: Colors.white,
-    borderWidth: 1,
+    borderWidth: 1.5,
     borderColor: Colors.border,
-    borderRadius: borderRadius.md,
-    paddingVertical: spacing.sm,
-    paddingHorizontal: spacing.md,
+    borderRadius: borderRadius.lg,
+    paddingVertical: spacing.md,
+    paddingHorizontal: spacing.lg,
     fontSize: 16,
+    ...shadows.light,
+  },
+  inputFocused: {
+    backgroundColor: Colors.white,
+    borderWidth: 2,
+    borderColor: Colors.primary,
+    borderRadius: borderRadius.lg,
+    paddingVertical: spacing.md,
+    paddingHorizontal: spacing.lg,
+    fontSize: 16,
+    ...shadows.medium,
   },
 
   // Badge styles

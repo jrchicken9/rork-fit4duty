@@ -4,12 +4,12 @@ import {
   Text,
   StyleSheet,
   ScrollView,
-  Image,
   TouchableOpacity,
   RefreshControl,
-  Alert,
+  Animated,
 } from "react-native";
 import { router } from "expo-router";
+import { LinearGradient } from "expo-linear-gradient";
 import { 
   ChevronRight, 
   Activity,
@@ -24,10 +24,13 @@ import {
   Users,
   TrendingUp,
   Star,
-  Award
+  Award,
+  Zap,
+  Trophy,
+  Play
 } from "lucide-react-native";
 import Colors from "@/constants/colors";
-import { typography, spacing, borderRadius, shadows } from "@/constants/designSystem";
+import { typography, spacing, borderRadius, shadows, componentStyles } from "@/constants/designSystem";
 import ProgressCard from "@/components/ProgressCard";
 import StatsOverview from "@/components/StatsOverview";
 import ApplicationProgress from "@/components/ApplicationProgress";
@@ -344,49 +347,191 @@ export default function DashboardScreen() {
   };
 
   return (
-    <ScrollView
-      style={styles.container}
-      contentContainerStyle={styles.contentContainer}
-      showsVerticalScrollIndicator={false}
-      refreshControl={
-        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-      }
-    >
-      {/* Enhanced Tab-Specific Header */}
-      <TabSpecificHeader
-        tab="dashboard"
-        stats={[
-          {
-            label: "Steps Complete",
-            value: `${completedSteps}/${applicationSteps.length}`,
-            icon: <Target size={16} color={Colors.primary} />
-          },
-          {
-            label: "This Week",
-            value: thisWeekWorkouts,
-            icon: <Activity size={16} color={Colors.success} />
-          },
-          {
-            label: "Current Streak",
-            value: currentStreak,
-            icon: <TrendingUp size={16} color={Colors.warning} />
-          }
-        ]}
+    <View style={styles.container}>
+      {/* Premium Background Gradient */}
+      <LinearGradient
+        colors={[Colors.gradients.surface.start, Colors.gradients.surface.end]}
+        style={StyleSheet.absoluteFillObject}
       />
+      
+      <ScrollView
+        style={styles.scrollView}
+        contentContainerStyle={styles.contentContainer}
+        showsVerticalScrollIndicator={false}
+        refreshControl={
+          <RefreshControl 
+            refreshing={refreshing} 
+            onRefresh={onRefresh}
+            tintColor={Colors.primary}
+            colors={[Colors.primary]}
+          />
+        }
+      >
+      {/* Premium Hero Section */}
+      <View style={styles.heroSection}>
+        <LinearGradient
+          colors={[Colors.gradients.primary.start, Colors.gradients.primary.end]}
+          style={styles.heroGradient}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 1, y: 1 }}
+        >
+          <View style={styles.heroContent}>
+            <View style={styles.heroHeader}>
+              <View style={styles.heroTextContainer}>
+                <Text style={styles.heroGreeting}>{heroGreeting}</Text>
+                <Text style={styles.heroSubtitle}>{heroSubtitle}</Text>
+              </View>
+              <View style={styles.heroIcon}>
+                <Trophy size={32} color={Colors.accent} />
+              </View>
+            </View>
+            
+            {/* Premium Stats Cards */}
+            <View style={styles.statsGrid}>
+              <View style={styles.statCard}>
+                <Target size={20} color={Colors.white} />
+                <Text style={styles.statValue}>{completedSteps}/{applicationSteps.length}</Text>
+                <Text style={styles.statLabel}>Steps Complete</Text>
+              </View>
+              <View style={styles.statCard}>
+                <Activity size={20} color={Colors.white} />
+                <Text style={styles.statValue}>{thisWeekWorkouts}</Text>
+                <Text style={styles.statLabel}>This Week</Text>
+              </View>
+              <View style={styles.statCard}>
+                <TrendingUp size={20} color={Colors.white} />
+                <Text style={styles.statValue}>{currentStreak}</Text>
+                <Text style={styles.statLabel}>Day Streak</Text>
+              </View>
+            </View>
+          </View>
+        </LinearGradient>
+      </View>
 
-      {/* Stats Overview - Simplified */}
-      <StatsOverview
-        totalWorkouts={thisWeekWorkouts}
-        weeklyGoal={weeklyGoal}
-        currentStreak={currentStreak}
-        applicationProgress={applicationProgress}
-      />
+      {/* Quick Actions - Premium Style */}
+      <View style={styles.quickActionsSection}>
+        <Text style={styles.sectionTitle}>Quick Actions</Text>
+        <View style={styles.quickActionsGrid}>
+          <TouchableOpacity 
+            style={styles.quickActionCard}
+            onPress={handleDigitalTestAccess}
+            activeOpacity={0.8}
+          >
+            <LinearGradient
+              colors={[Colors.gradients.premium.start, Colors.gradients.premium.end]}
+              style={styles.quickActionGradient}
+            >
+              <Zap size={24} color={Colors.white} />
+              <Text style={styles.quickActionTitle}>Digital Test</Text>
+              <Text style={styles.quickActionSubtitle}>Practice PIN/PREP</Text>
+            </LinearGradient>
+          </TouchableOpacity>
+          
+          <TouchableOpacity 
+            style={styles.quickActionCard}
+            onPress={() => router.push('/fitness')}
+            activeOpacity={0.8}
+          >
+            <LinearGradient
+              colors={[Colors.gradients.success.start, Colors.gradients.success.end]}
+              style={styles.quickActionGradient}
+            >
+              <Dumbbell size={24} color={Colors.white} />
+              <Text style={styles.quickActionTitle}>Training</Text>
+              <Text style={styles.quickActionSubtitle}>Start workout</Text>
+            </LinearGradient>
+          </TouchableOpacity>
+          
+          <TouchableOpacity 
+            style={styles.quickActionCard}
+            onPress={() => router.push('/practice-sessions')}
+            activeOpacity={0.8}
+          >
+            <LinearGradient
+              colors={[Colors.gradients.warning.start, Colors.gradients.warning.end]}
+              style={styles.quickActionGradient}
+            >
+              <Calendar size={24} color={Colors.white} />
+              <Text style={styles.quickActionTitle}>Book Session</Text>
+              <Text style={styles.quickActionSubtitle}>In-person test</Text>
+            </LinearGradient>
+          </TouchableOpacity>
+          
+          <TouchableOpacity 
+            style={styles.quickActionCard}
+            onPress={() => router.push('/(tabs)/community')}
+            activeOpacity={0.8}
+          >
+            <LinearGradient
+              colors={[Colors.gradients.secondary.start, Colors.gradients.secondary.end]}
+              style={styles.quickActionGradient}
+            >
+              <Users size={24} color={Colors.white} />
+              <Text style={styles.quickActionTitle}>Community</Text>
+              <Text style={styles.quickActionSubtitle}>Connect & share</Text>
+            </LinearGradient>
+          </TouchableOpacity>
+        </View>
+      </View>
 
-      {/* Prerequisites Progress - Only show if incomplete */}
+      {/* Application Progress - Premium Card */}
+      <View style={styles.progressSection}>
+        <View style={styles.sectionHeader}>
+          <Text style={styles.sectionTitle}>Application Progress</Text>
+          <TouchableOpacity
+            style={styles.viewAllButton}
+            onPress={() => router.push('/application')}
+          >
+            <Text style={styles.viewAllText}>View All</Text>
+            <ChevronRight size={16} color={Colors.primary} />
+          </TouchableOpacity>
+        </View>
+        
+        <EnhancedCard variant="premium">
+          <View style={styles.progressHeader}>
+            <View style={styles.progressIconContainer}>
+              <Target size={24} color={Colors.primary} />
+            </View>
+            <View style={styles.progressInfo}>
+              <Text style={styles.progressTitle}>Overall Progress</Text>
+              <Text style={styles.progressPercentage}>{Math.round(applicationProgress)}% Complete</Text>
+            </View>
+          </View>
+          
+          <View style={styles.progressBarContainer}>
+            <View style={styles.progressBarBackground}>
+              <View style={[styles.progressBarFill, { width: `${applicationProgress}%` }]} />
+            </View>
+          </View>
+          
+          <View style={styles.progressSteps}>
+            {applicationSteps.slice(0, 3).map((step, index) => (
+              <View key={step.id} style={styles.progressStep}>
+                <View style={[
+                  styles.stepIndicator,
+                  { backgroundColor: step.completed ? Colors.success : Colors.border }
+                ]}>
+                  {step.completed ? (
+                    <CheckCircle size={12} color={Colors.white} />
+                  ) : (
+                    <Text style={styles.stepNumber}>{index + 1}</Text>
+                  )}
+                </View>
+                <Text style={[
+                  styles.stepTitle,
+                  { color: step.completed ? Colors.text : Colors.textSecondary }
+                ]}>{step.title}</Text>
+              </View>
+            ))}
+          </View>
+        </EnhancedCard>
+      </View>
+      
+      {/* Prerequisites - Only show if incomplete */}
       {shouldShowPrerequisites && (
         <View style={styles.prerequisitesSection}>
           <View style={styles.sectionHeader}>
-            <Text style={styles.modernSectionTitle}>Complete Requirements</Text>
+            <Text style={styles.sectionTitle}>Missing Requirements</Text>
             <TouchableOpacity
               style={styles.viewAllButton}
               onPress={() => router.push('/application')}
@@ -397,17 +542,18 @@ export default function DashboardScreen() {
           </View>
           
           <EnhancedCard variant="elevated">
-            <View style={styles.missingHeader}>
-              <AlertCircle size={16} color={Colors.warning} />
-              <Text style={styles.missingTitle}>Missing Requirements</Text>
+            <View style={styles.warningHeader}>
+              <AlertCircle size={20} color={Colors.warning} />
+              <Text style={styles.warningTitle}>Action Required</Text>
             </View>
-            <Text style={styles.missingSubtitle}>
-              Complete these to unlock application steps
+            <Text style={styles.warningSubtitle}>
+              Complete these requirements to unlock application steps
             </Text>
+            
             {incompletePrerequisites.slice(0, 3).map((prereq) => (
               <TouchableOpacity 
                 key={prereq.id} 
-                style={styles.missingItem}
+                style={styles.requirementItem}
                 onPress={() => {
                   if (prereq.id === 'physical-fitness') {
                     router.push('/fitness');
@@ -415,18 +561,23 @@ export default function DashboardScreen() {
                     router.push('/application');
                   }
                 }}
+                activeOpacity={0.7}
               >
-                <Text style={styles.missingItemText}>• {prereq.title}</Text>
-                <ChevronRight size={14} color={Colors.textSecondary} />
+                <View style={styles.requirementIcon}>
+                  <AlertCircle size={16} color={Colors.warning} />
+                </View>
+                <Text style={styles.requirementText}>{prereq.title}</Text>
+                <ChevronRight size={16} color={Colors.textSecondary} />
               </TouchableOpacity>
             ))}
+            
             {incompletePrerequisites.length > 3 && (
               <TouchableOpacity 
                 style={styles.viewMoreButton}
                 onPress={() => router.push('/application')}
               >
                 <Text style={styles.viewMoreText}>
-                  View {incompletePrerequisites.length - 3} more requirements
+                  +{incompletePrerequisites.length - 3} more requirements
                 </Text>
               </TouchableOpacity>
             )}
@@ -434,14 +585,14 @@ export default function DashboardScreen() {
         </View>
       )}
 
-      {/* Upcoming Bookings - Only show if there are bookings */}
+      {/* Upcoming Bookings - Premium Style */}
       {upcomingBookings.length > 0 && (
         <View style={styles.bookingsSection}>
           <View style={styles.sectionHeader}>
-            <Text style={styles.modernSectionTitle}>Upcoming Sessions</Text>
+            <Text style={styles.sectionTitle}>Upcoming Sessions</Text>
             <TouchableOpacity
               style={styles.viewAllButton}
-              onPress={() => router.push('/practice-sessions/bookings')}
+              onPress={() => router.push('/practice-sessions')}
             >
               <Text style={styles.viewAllText}>View All</Text>
               <ChevronRight size={16} color={Colors.primary} />
@@ -449,121 +600,145 @@ export default function DashboardScreen() {
           </View>
           
           {upcomingBookings.map((booking) => (
-            <EnhancedCard
+            <TouchableOpacity
               key={booking.id}
-              variant="elevated"
-              onPress={() => router.push(`/practice-sessions/${booking.id}`)}
               style={styles.bookingCard}
+              onPress={() => router.push(`/practice-sessions/${booking.id}`)}
+              activeOpacity={0.8}
             >
-              <View style={styles.bookingHeader}>
-                <View style={styles.bookingInfo}>
-                  <Text style={styles.bookingTitle}>{booking.session_title}</Text>
-                  <Text style={styles.bookingDate}>
-                    {new Date(booking.session_date).toLocaleDateString()} • {booking.start_time}
-                  </Text>
-                  <Text style={styles.bookingLocation}>{booking.location_name}</Text>
+              <LinearGradient
+                colors={[Colors.white, Colors.backgroundSecondary]}
+                style={styles.bookingGradient}
+              >
+                <View style={styles.bookingContent}>
+                  <View style={styles.bookingIconContainer}>
+                    <Calendar size={24} color={Colors.primary} />
+                  </View>
+                  
+                  <View style={styles.bookingDetails}>
+                    <Text style={styles.bookingTitle}>{booking.session_title}</Text>
+                    <Text style={styles.bookingDateTime}>
+                      {new Date(booking.session_date).toLocaleDateString()} at {booking.start_time}
+                    </Text>
+                    <Text style={styles.bookingLocation}>{booking.location_name}</Text>
+                    
+                    <View style={styles.bookingFooter}>
+                      <View style={[
+                        styles.bookingBadge,
+                        { backgroundColor: Colors.primary + '15' }
+                      ]}>
+                        <Text style={[styles.bookingBadgeText, { color: Colors.primary }]}>
+                          {booking.test_type} Test
+                        </Text>
+                      </View>
+                      
+                      <View style={styles.bookingStatus}>
+                        {getStatusIcon(booking.status)}
+                        <Text style={[styles.bookingStatusText, { color: getStatusColor(booking.status) }]}>
+                          {getStatusText(booking.status)}
+                        </Text>
+                      </View>
+                    </View>
+                  </View>
                 </View>
-                <View style={styles.bookingStatus}>
-                  {getStatusIcon(booking.status)}
-                  <Text style={[styles.bookingStatusText, { color: getStatusColor(booking.status) }]}>
-                    {getStatusText(booking.status)}
-                  </Text>
-                </View>
-              </View>
-              <View style={styles.bookingBadge}>
-                <Text style={styles.bookingBadgeText}>{booking.test_type} Test</Text>
-              </View>
-            </EnhancedCard>
+              </LinearGradient>
+            </TouchableOpacity>
           ))}
         </View>
       )}
 
-      {/* Top Fitness Metric - Only show if not meeting requirements */}
+      {/* Fitness Progress - Only show if not meeting requirements */}
       {fitnessProgress.beepTestLevel < 6.5 && (
-        <View style={styles.topMetricSection}>
-          <ProgressCard
-            title="Beep Test Level"
-            subtitle="PREP requirement: 6.5"
-            value={fitnessProgress.beepTestLevel.toFixed(1)}
-            change={10}
-            progress={(fitnessProgress.beepTestLevel / 6.5) * 100}
-            icon={<Activity size={20} color={Colors.primary} />}
-            testId="beep-test-progress"
-            variant="large"
-            onPress={() => router.push("/fitness")}
-          />
+        <View style={styles.fitnessSection}>
+          <View style={styles.sectionHeader}>
+            <Text style={styles.sectionTitle}>Fitness Progress</Text>
+            <TouchableOpacity
+              style={styles.viewAllButton}
+              onPress={() => router.push('/fitness')}
+            >
+              <Text style={styles.viewAllText}>View Details</Text>
+              <ChevronRight size={16} color={Colors.primary} />
+            </TouchableOpacity>
+          </View>
+          
+          <TouchableOpacity
+            style={styles.fitnessCard}
+            onPress={() => router.push('/fitness')}
+            activeOpacity={0.8}
+          >
+            <LinearGradient
+              colors={[Colors.gradients.success.start, Colors.gradients.success.end]}
+              style={styles.fitnessGradient}
+            >
+              <View style={styles.fitnessContent}>
+                <View style={styles.fitnessHeader}>
+                  <Activity size={28} color={Colors.white} />
+                  <View style={styles.fitnessInfo}>
+                    <Text style={styles.fitnessTitle}>Beep Test Level</Text>
+                    <Text style={styles.fitnessSubtitle}>PREP requirement: 6.5</Text>
+                  </View>
+                </View>
+                
+                <View style={styles.fitnessProgress}>
+                  <Text style={styles.fitnessValue}>{fitnessProgress.beepTestLevel.toFixed(1)}</Text>
+                  <View style={styles.fitnessProgressBar}>
+                    <View style={styles.fitnessProgressBackground}>
+                      <View style={[
+                        styles.fitnessProgressFill,
+                        { width: `${Math.min((fitnessProgress.beepTestLevel / 6.5) * 100, 100)}%` }
+                      ]} />
+                    </View>
+                    <Text style={styles.fitnessProgressText}>
+                      {Math.round((fitnessProgress.beepTestLevel / 6.5) * 100)}% to goal
+                    </Text>
+                  </View>
+                </View>
+              </View>
+            </LinearGradient>
+          </TouchableOpacity>
         </View>
       )}
 
-      {/* Application Progress - Simplified */}
-      <ApplicationProgress
-        steps={applicationSteps.slice(0, 3).map(step => ({
-          id: step.id,
-          title: step.title,
-          completed: step.completed,
-          current: step.current,
-        }))}
-        completedSteps={completedSteps}
-        totalSteps={applicationSteps.length}
-      />
 
-      {/* Quick Actions - Streamlined */}
-      <View style={styles.quickActionsSection}>
-        <Text style={styles.modernSectionTitle}>Quick Actions</Text>
-        <View style={styles.quickActionsGrid}>
-          <EnhancedCard
-            variant="gradient"
-            gradientColors={[Colors.gradients.primary.start, Colors.gradients.primary.end]}
-            onPress={() => router.push("/fitness")}
-            style={styles.quickActionCard}
-          >
-            <Dumbbell size={24} color={Colors.white} />
-            <Text style={styles.quickActionText}>Start Training</Text>
-          </EnhancedCard>
-          <EnhancedCard
-            variant="gradient"
-            gradientColors={[Colors.gradients.secondary.start, Colors.gradients.secondary.end]}
-            onPress={() => router.push("/application")}
-            style={styles.quickActionCard}
-          >
-            <Target size={24} color={Colors.white} />
-            <Text style={styles.quickActionText}>Application</Text>
-          </EnhancedCard>
-          <EnhancedCard
-            variant="gradient"
-            gradientColors={[Colors.gradients.success.start, Colors.gradients.success.end]}
-            onPress={() => router.push("/practice-sessions")}
-            style={styles.quickActionCard}
-          >
-            <Calendar size={24} color={Colors.white} />
-            <Text style={styles.quickActionText}>Book Session</Text>
-          </EnhancedCard>
-          <EnhancedCard
-            variant="gradient"
-            gradientColors={[Colors.gradients.warning.start, Colors.gradients.warning.end]}
-            onPress={() => router.push("/(tabs)/community")}
-            style={styles.quickActionCard}
-          >
-            <Users size={24} color={Colors.white} />
-            <Text style={styles.quickActionText}>Community</Text>
-          </EnhancedCard>
-        </View>
-      </View>
 
-      {/* Today's Workout - Only show if there's a workout */}
+
+
+      {/* Today's Workout - Premium Style */}
       {recentWorkouts.length > 0 && (
-        <View style={styles.workoutsSection}>
+        <View style={styles.workoutSection}>
           <View style={styles.sectionHeader}>
-            <Text style={styles.modernSectionTitle}>Today&apos;s Workout</Text>
+            <Text style={styles.sectionTitle}>Today's Workout</Text>
             <TouchableOpacity
               style={styles.viewAllButton}
-              onPress={() => router.push("/fitness")}
+              onPress={() => router.push('/fitness')}
             >
               <Text style={styles.viewAllText}>View All</Text>
               <ChevronRight size={16} color={Colors.primary} />
             </TouchableOpacity>
           </View>
-          <WorkoutCard workout={recentWorkouts[0]} />
+          
+          <TouchableOpacity
+            style={styles.workoutCard}
+            onPress={() => router.push(`/workout/${recentWorkouts[0].id}`)}
+            activeOpacity={0.8}
+          >
+            <LinearGradient
+              colors={[Colors.gradients.warning.start, Colors.gradients.warning.end]}
+              style={styles.workoutGradient}
+            >
+              <View style={styles.workoutContent}>
+                <View style={styles.workoutHeader}>
+                  <Play size={24} color={Colors.white} />
+                  <Text style={styles.workoutTitle}>{recentWorkouts[0].title}</Text>
+                </View>
+                <Text style={styles.workoutDescription}>{recentWorkouts[0].description}</Text>
+                <View style={styles.workoutFooter}>
+                  <Text style={styles.workoutDuration}>{recentWorkouts[0].duration} min</Text>
+                  <Text style={styles.workoutDifficulty}>Beginner</Text>
+                </View>
+              </View>
+            </LinearGradient>
+          </TouchableOpacity>
         </View>
       )}
 
@@ -667,7 +842,8 @@ export default function DashboardScreen() {
         onClose={() => setShowServicesModal(false)}
       />
 
-    </ScrollView>
+      </ScrollView>
+    </View>
   );
 }
 
@@ -707,8 +883,337 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: Colors.background,
   },
+  scrollView: {
+    flex: 1,
+  },
   contentContainer: {
     padding: spacing.md,
+  },
+  // Hero Section Styles
+  heroSection: {
+    marginBottom: spacing.lg,
+    marginHorizontal: -spacing.md,
+  },
+  heroGradient: {
+    paddingHorizontal: spacing.lg,
+    paddingVertical: spacing.xl,
+    borderBottomLeftRadius: borderRadius.xl,
+    borderBottomRightRadius: borderRadius.xl,
+  },
+  heroContent: {
+    alignItems: 'center',
+  },
+  heroHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    width: '100%',
+    marginBottom: spacing.lg,
+  },
+  heroTextContainer: {
+    flex: 1,
+  },
+  heroGreeting: {
+    ...typography.displayMedium,
+    color: Colors.white,
+    marginBottom: spacing.xs,
+  },
+  heroSubtitle: {
+    ...typography.bodyLarge,
+    color: Colors.white + 'CC',
+  },
+  heroIcon: {
+    marginLeft: spacing.md,
+  },
+  statsGrid: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '100%',
+    gap: spacing.md,
+  },
+  statCard: {
+    flex: 1,
+    alignItems: 'center',
+    backgroundColor: Colors.white + '15',
+    borderRadius: borderRadius.lg,
+    padding: spacing.md,
+    borderWidth: 1,
+    borderColor: Colors.white + '20',
+  },
+  statValue: {
+    ...typography.headingLarge,
+    color: Colors.white,
+    marginTop: spacing.xs,
+    marginBottom: spacing.xs,
+  },
+  statLabel: {
+    ...typography.labelSmall,
+    color: Colors.white + 'CC',
+    textAlign: 'center',
+  },
+  // Section Styles
+  sectionTitle: {
+    ...typography.headingLarge,
+    color: Colors.text,
+    fontWeight: '800',
+  },
+  // Quick Actions Styles
+  quickActionGradient: {
+    flex: 1,
+    alignItems: 'center',
+    padding: spacing.lg,
+    borderRadius: borderRadius.lg,
+    minHeight: 100,
+    justifyContent: 'center',
+  },
+  quickActionTitle: {
+    ...typography.labelLarge,
+    color: Colors.white,
+    marginTop: spacing.sm,
+    fontWeight: '700',
+  },
+  quickActionSubtitle: {
+    ...typography.labelSmall,
+    color: Colors.white + 'CC',
+    marginTop: spacing.xs,
+  },
+  // Progress Styles
+  progressHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: spacing.md,
+  },
+  progressIconContainer: {
+    width: 48,
+    height: 48,
+    borderRadius: borderRadius.lg,
+    backgroundColor: Colors.primary + '15',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: spacing.md,
+  },
+  progressInfo: {
+    flex: 1,
+  },
+  progressTitle: {
+    ...typography.headingSmall,
+    color: Colors.text,
+    marginBottom: spacing.xs,
+  },
+  progressPercentage: {
+    ...typography.bodyMedium,
+    color: Colors.textSecondary,
+  },
+  progressBarContainer: {
+    marginBottom: spacing.lg,
+  },
+  progressBarBackground: {
+    height: 8,
+    backgroundColor: Colors.border,
+    borderRadius: borderRadius.sm,
+    overflow: 'hidden',
+  },
+  progressBarFill: {
+    height: '100%',
+    backgroundColor: Colors.primary,
+    borderRadius: borderRadius.sm,
+  },
+  progressSteps: {
+    gap: spacing.md,
+  },
+  progressStep: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  stepIndicator: {
+    width: 24,
+    height: 24,
+    borderRadius: 12,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: spacing.sm,
+  },
+  stepNumber: {
+    ...typography.labelSmall,
+    color: Colors.white,
+    fontWeight: '700',
+  },
+  stepTitle: {
+    ...typography.bodyMedium,
+    flex: 1,
+  },
+  // Warning Styles
+  warningHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: spacing.sm,
+  },
+  warningTitle: {
+    ...typography.headingSmall,
+    color: Colors.warning,
+    marginLeft: spacing.sm,
+  },
+  warningSubtitle: {
+    ...typography.bodyMedium,
+    color: Colors.textSecondary,
+    marginBottom: spacing.md,
+  },
+  requirementItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: spacing.sm,
+    borderBottomWidth: 1,
+    borderBottomColor: Colors.border + '50',
+  },
+  requirementIcon: {
+    marginRight: spacing.sm,
+  },
+  requirementText: {
+    ...typography.bodyMedium,
+    color: Colors.text,
+    flex: 1,
+  },
+  // Booking Styles
+  bookingGradient: {
+    borderRadius: borderRadius.lg,
+    padding: spacing.md,
+    ...shadows.light,
+  },
+  bookingContent: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+  },
+  bookingIconContainer: {
+    width: 48,
+    height: 48,
+    borderRadius: borderRadius.lg,
+    backgroundColor: Colors.primary + '15',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: spacing.md,
+  },
+  bookingDetails: {
+    flex: 1,
+  },
+  bookingDateTime: {
+    ...typography.bodySmall,
+    color: Colors.textSecondary,
+    marginBottom: spacing.xs,
+  },
+  bookingFooter: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginTop: spacing.sm,
+  },
+  // Fitness Styles
+  fitnessSection: {
+    marginBottom: spacing.lg,
+  },
+  fitnessCard: {
+    borderRadius: borderRadius.lg,
+    overflow: 'hidden',
+    ...shadows.medium,
+  },
+  fitnessGradient: {
+    padding: spacing.lg,
+  },
+  fitnessContent: {
+    alignItems: 'center',
+  },
+  fitnessHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: spacing.lg,
+    width: '100%',
+  },
+  fitnessInfo: {
+    flex: 1,
+    marginLeft: spacing.md,
+  },
+  fitnessTitle: {
+    ...typography.headingSmall,
+    color: Colors.white,
+    marginBottom: spacing.xs,
+  },
+  fitnessSubtitle: {
+    ...typography.bodySmall,
+    color: Colors.white + 'CC',
+  },
+  fitnessProgress: {
+    alignItems: 'center',
+    width: '100%',
+  },
+  fitnessValue: {
+    ...typography.displayLarge,
+    color: Colors.white,
+    marginBottom: spacing.md,
+  },
+  fitnessProgressBar: {
+    width: '100%',
+    alignItems: 'center',
+  },
+  fitnessProgressBackground: {
+    width: '100%',
+    height: 8,
+    backgroundColor: Colors.white + '30',
+    borderRadius: borderRadius.sm,
+    overflow: 'hidden',
+    marginBottom: spacing.sm,
+  },
+  fitnessProgressFill: {
+    height: '100%',
+    backgroundColor: Colors.white,
+    borderRadius: borderRadius.sm,
+  },
+  fitnessProgressText: {
+    ...typography.bodySmall,
+    color: Colors.white + 'CC',
+  },
+  // Workout Styles
+  workoutSection: {
+    marginBottom: spacing.lg,
+  },
+  workoutCard: {
+    borderRadius: borderRadius.lg,
+    overflow: 'hidden',
+    ...shadows.medium,
+  },
+  workoutGradient: {
+    padding: spacing.lg,
+  },
+  workoutContent: {
+    alignItems: 'flex-start',
+  },
+  workoutHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: spacing.sm,
+  },
+  workoutTitle: {
+    ...typography.headingSmall,
+    color: Colors.white,
+    marginLeft: spacing.sm,
+    flex: 1,
+  },
+  workoutDescription: {
+    ...typography.bodyMedium,
+    color: Colors.white + 'CC',
+    marginBottom: spacing.md,
+  },
+  workoutFooter: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '100%',
+  },
+  workoutDuration: {
+    ...typography.labelMedium,
+    color: Colors.white,
+    fontWeight: '600',
+  },
+  workoutDifficulty: {
+    ...typography.labelMedium,
+    color: Colors.white + 'CC',
   },
   progressSection: {
     marginBottom: 24,
@@ -845,37 +1350,7 @@ const styles = StyleSheet.create({
     marginTop: 4,
     lineHeight: 18,
   },
-  heroHeader: {
-    backgroundColor: Colors.white,
-    borderRadius: 16,
-    padding: 20,
-    marginBottom: 16,
-    shadowColor: Colors.black,
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.05,
-    shadowRadius: 8,
-    elevation: 2,
-  },
-  heroContent: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-  },
-  headerInfo: {
-    flex: 1,
-  },
-  heroGreeting: {
-    fontSize: 24,
-    fontWeight: "700",
-    color: Colors.text,
-    lineHeight: 28,
-  },
-  heroSubtitle: {
-    fontSize: 14,
-    color: Colors.textSecondary,
-    marginTop: 4,
-    lineHeight: 18,
-  },
+
   heroStats: {
     flexDirection: "row",
     marginTop: 20,

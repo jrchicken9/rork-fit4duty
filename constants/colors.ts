@@ -1,16 +1,22 @@
 export default {
-  // Primary Brand Colors
-  primary: "#1E3A8A", // Dark blue (police blue)
-  secondary: "#0EA5E9", // Lighter blue for accents
-  accent: "#F97316", // Orange for highlights and CTAs
-  success: "#10B981", // Green for success states
-  error: "#EF4444", // Red for errors
-  warning: "#F59E0B", // Yellow for warnings
+  // Primary Brand Colors - Enhanced for premium feel
+  primary: "#1E40AF", // Rich police blue
+  primaryDark: "#1E3A8A", // Darker variant
+  primaryLight: "#3B82F6", // Lighter variant
+  secondary: "#0EA5E9", // Bright blue for accents
+  accent: "#F59E0B", // Premium gold for highlights
+  accentSecondary: "#F97316", // Orange for secondary CTAs
+  success: "#059669", // Rich green
+  error: "#DC2626", // Strong red
+  warning: "#D97706", // Warm amber
+  info: "#0284C7", // Info blue
   
-  // Background Colors
-  background: "#F8FAFC", // Light background
-  card: "#FFFFFF", // White card background
-  surface: "#F8FAFC", // Surface color for cards
+  // Background Colors - More sophisticated
+  background: "#FAFBFC", // Softer background
+  backgroundSecondary: "#F1F5F9", // Secondary background
+  card: "#FFFFFF", // Pure white cards
+  surface: "#FEFEFE", // Subtle surface
+  overlay: "rgba(0, 0, 0, 0.5)", // Modal overlay
   white: "#FFFFFF", // Pure white
   black: "#000000", // Pure black
   
@@ -18,9 +24,6 @@ export default {
   text: "#1E293B", // Dark text
   textSecondary: "#64748B", // Secondary text
   textTertiary: "#94A3B8", // Tertiary text
-  
-  // Info Colors
-  info: "#0EA5E9", // Info blue color
   
   // Border Colors
   border: "#E2E8F0", // Light border
@@ -67,40 +70,55 @@ export default {
     },
   },
 
-  // Enhanced Gradients
+  // Premium Gradients - More sophisticated
   gradients: {
     primary: {
+      start: "#1E40AF",
+      end: "#3B82F6",
+    },
+    primaryDark: {
       start: "#1E3A8A",
-      end: "#0EA5E9",
+      end: "#1E40AF",
     },
     secondary: {
       start: "#0EA5E9",
       end: "#38BDF8",
     },
     success: {
-      start: "#10B981",
-      end: "#34D399",
+      start: "#059669",
+      end: "#10B981",
     },
     warning: {
+      start: "#D97706",
+      end: "#F59E0B",
+    },
+    error: {
+      start: "#DC2626",
+      end: "#EF4444",
+    },
+    accent: {
       start: "#F59E0B",
       end: "#FBBF24",
     },
-    error: {
-      start: "#EF4444",
-      end: "#F87171",
+    premium: {
+      start: "#7C3AED",
+      end: "#A855F7",
     },
-    accent: {
-      start: "#F97316",
-      end: "#FB923C",
+    surface: {
+      start: "#FFFFFF",
+      end: "#F8FAFC",
     },
   },
 
-  // Shadow Colors
+  // Enhanced Shadow Colors
   shadows: {
-    light: "rgba(0, 0, 0, 0.05)",
+    light: "rgba(0, 0, 0, 0.04)",
     medium: "rgba(0, 0, 0, 0.08)",
-    heavy: "rgba(0, 0, 0, 0.12)",
-    colored: "rgba(30, 58, 138, 0.15)", // Primary color shadow
+    heavy: "rgba(0, 0, 0, 0.15)",
+    colored: "rgba(30, 64, 175, 0.12)", // Primary color shadow
+    premium: "rgba(124, 58, 237, 0.15)", // Premium purple shadow
+    success: "rgba(5, 150, 105, 0.12)", // Success shadow
+    warning: "rgba(217, 119, 6, 0.12)", // Warning shadow
   },
 
   // Status Colors

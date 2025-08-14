@@ -142,6 +142,19 @@ export default function ApplicationScreen() {
       setShowUpsellModal(true);
     }
   };
+  
+  const getStepGradientColors = (status: string): readonly [string, string] => {
+    switch (status) {
+      case 'completed':
+        return [Colors.gradients.success.start, Colors.gradients.success.end] as const;
+      case 'current':
+        return [Colors.gradients.primary.start, Colors.gradients.primary.end] as const;
+      case 'locked':
+        return [Colors.gray[400], Colors.gray[500]] as const;
+      default:
+        return [Colors.gradients.secondary.start, Colors.gradients.secondary.end] as const;
+    }
+  };
 
   if (isLoading) {
     return (
@@ -434,8 +447,209 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: Colors.background,
   },
+  scrollView: {
+    flex: 1,
+  },
   content: {
     paddingBottom: spacing.xl,
+  },
+  // Hero Section Styles
+  heroSection: {
+    marginBottom: spacing.lg,
+    marginHorizontal: -spacing.md,
+  },
+  heroGradient: {
+    paddingHorizontal: spacing.lg,
+    paddingVertical: spacing.xl,
+    borderBottomLeftRadius: borderRadius.xl,
+    borderBottomRightRadius: borderRadius.xl,
+  },
+  heroContent: {
+    alignItems: 'center',
+  },
+  heroHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    width: '100%',
+    marginBottom: spacing.lg,
+  },
+  heroTextContainer: {
+    flex: 1,
+  },
+  heroTitle: {
+    ...typography.displayMedium,
+    color: Colors.white,
+    marginBottom: spacing.xs,
+  },
+  heroSubtitle: {
+    ...typography.bodyLarge,
+    color: Colors.white + 'CC',
+  },
+  heroIconContainer: {
+    marginLeft: spacing.md,
+  },
+  progressStatsContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '100%',
+    gap: spacing.md,
+  },
+  progressStatCard: {
+    flex: 1,
+    alignItems: 'center',
+    backgroundColor: Colors.white + '15',
+    borderRadius: borderRadius.lg,
+    padding: spacing.md,
+    borderWidth: 1,
+    borderColor: Colors.white + '20',
+  },
+  progressStatValue: {
+    ...typography.headingLarge,
+    color: Colors.white,
+    marginTop: spacing.xs,
+    marginBottom: spacing.xs,
+  },
+  progressStatLabel: {
+    ...typography.labelSmall,
+    color: Colors.white + 'CC',
+    textAlign: 'center',
+  },
+  // Progress Overview Section
+  progressOverviewSection: {
+    marginBottom: spacing.lg,
+    paddingHorizontal: spacing.md,
+  },
+  progressOverviewHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: spacing.md,
+  },
+  progressOverviewIcon: {
+    width: 56,
+    height: 56,
+    borderRadius: borderRadius.lg,
+    backgroundColor: Colors.primary + '15',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: spacing.md,
+  },
+  progressOverviewInfo: {
+    flex: 1,
+  },
+  progressOverviewTitle: {
+    ...typography.headingLarge,
+    color: Colors.text,
+    marginBottom: spacing.xs,
+  },
+  progressOverviewSubtitle: {
+    ...typography.bodyMedium,
+    color: Colors.textSecondary,
+  },
+  progressPercentageContainer: {
+    alignItems: 'center',
+  },
+  progressPercentageText: {
+    ...typography.displaySmall,
+    color: Colors.primary,
+    fontWeight: '800',
+  },
+  progressBarSection: {
+    marginBottom: spacing.md,
+  },
+  progressOverviewDescription: {
+    ...typography.bodySmall,
+    color: Colors.textSecondary,
+    textAlign: 'center',
+  },
+  // Steps Section
+  stepsSectionHeader: {
+    paddingHorizontal: spacing.md,
+    marginBottom: spacing.lg,
+  },
+  stepsSectionTitle: {
+    ...typography.displaySmall,
+    color: Colors.text,
+    marginBottom: spacing.xs,
+  },
+  stepsSectionSubtitle: {
+    ...typography.bodyLarge,
+    color: Colors.textSecondary,
+  },
+  stepsContainer: {
+    paddingHorizontal: spacing.md,
+    gap: spacing.md,
+  },
+  stepCard: {
+    borderRadius: borderRadius.xl,
+    overflow: 'hidden',
+    marginBottom: spacing.sm,
+    ...shadows.medium,
+  },
+  stepCardCompleted: {
+    ...shadows.colored,
+  },
+  stepCardCurrent: {
+    ...shadows.heavy,
+  },
+  stepCardLocked: {
+    opacity: 0.7,
+  },
+  stepCardGradient: {
+    padding: spacing.lg,
+  },
+  stepCardContent: {
+    position: 'relative',
+  },
+  stepCardHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  stepNumberContainer: {
+    width: 48,
+    height: 48,
+    borderRadius: borderRadius.lg,
+    backgroundColor: Colors.white + '20',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: spacing.md,
+  },
+  stepNumber: {
+    ...typography.headingSmall,
+    color: Colors.white,
+    fontWeight: '800',
+  },
+  stepInfo: {
+    flex: 1,
+  },
+  stepTitle: {
+    ...typography.headingSmall,
+    color: Colors.white,
+    marginBottom: spacing.xs,
+  },
+  stepDescription: {
+    ...typography.bodyMedium,
+    color: Colors.white + 'CC',
+  },
+  premiumBadgeContainer: {
+    position: 'absolute',
+    top: -spacing.sm,
+    right: -spacing.sm,
+  },
+  premiumBadge: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: Colors.white,
+    borderRadius: borderRadius.full,
+    paddingHorizontal: spacing.sm,
+    paddingVertical: spacing.xs,
+    gap: spacing.xs,
+    ...shadows.light,
+  },
+  premiumBadgeText: {
+    ...typography.labelSmall,
+    color: Colors.accent,
+    fontWeight: '700',
   },
   centered: {
     justifyContent: "center",

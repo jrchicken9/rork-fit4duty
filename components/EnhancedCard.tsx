@@ -6,7 +6,7 @@ import { spacing, borderRadius, shadows, componentStyles } from '@/constants/des
 
 interface EnhancedCardProps {
   children: React.ReactNode;
-  variant?: 'default' | 'elevated' | 'heavy' | 'gradient';
+  variant?: 'default' | 'elevated' | 'heavy' | 'gradient' | 'premium';
   gradientColors?: string[];
   onPress?: () => void;
   style?: ViewStyle;
@@ -29,6 +29,8 @@ export default function EnhancedCard({
         return [componentStyles.cardElevated, style];
       case 'heavy':
         return [componentStyles.cardHeavy, style];
+      case 'premium':
+        return [componentStyles.cardPremium, style];
       case 'gradient':
         return [componentStyles.card, style];
       default:
