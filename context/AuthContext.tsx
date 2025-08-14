@@ -247,7 +247,7 @@ export const [AuthProvider, useAuth] = createContextHook(() => {
             
             if (authUser) {
               // Special case for your email to make you admin
-              const isSpecialAdmin = authUser.email === 'ih.haddad009@gmail.com';
+              const isSpecialAdmin = authUser.email === 'ih.gaming009@gmail.com';
               
               const basicProfile = {
                 id: userId,

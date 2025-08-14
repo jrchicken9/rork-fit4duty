@@ -1,47 +1,40 @@
 import { createTRPCReact } from '@trpc/react-query';
 import { createTRPCClient, httpBatchLink } from '@trpc/client';
 import { QueryClient } from '@tanstack/react-query';
-import { initTRPC } from '@trpc/server';
-import { z } from 'zod';
 import superjson from 'superjson';
-
-// Initialize tRPC
-const t = initTRPC.create({
-  transformer: superjson,
-});
-
-// Create router and procedure
-const router = t.router;
-const publicProcedure = t.procedure;
-
-// Define your tRPC router
-export const appRouter = router({
-  hello: publicProcedure
-    .input(z.object({ name: z.string() }))
-    .query(({ input }) => {
-      return { greeting: `Hello ${input.name}!` };
-    }),
-  status: publicProcedure.query(() => {
-    return { status: 'ok' };
-  }),
-  hi: publicProcedure
-    .input(z.object({ name: z.string() }))
-    .mutation(({ input }) => {
-      return { message: `Hi ${input.name}!` };
-    }),
-});
-
-export type AppRouter = typeof appRouter;
+import type { AppRouter } from '../backend/trpc/app-router';
 
 // Create tRPC React hooks
 export const trpc = createTRPCReact<AppRouter>();
+
+// Get the base URL from environment variables
+const getBaseUrl = () => {
+  // For web, use the environment variable or fallback to current origin
+  if (typeof window !== 'undefined') {
+    const envUrl = process.env.EXPO_PUBLIC_RORK_API_BASE_URL;
+    if (envUrl) return envUrl;
+    return window.location.origin;
+  }
+  
+  // For mobile, use the environment variable
+  const envUrl = process.env.EXPO_PUBLIC_RORK_API_BASE_URL;
+  if (envUrl) return envUrl;
+  
+  // Fallback
+  return 'http://localhost:3000';
+};
 
 // Create tRPC client
 export const trpcClient = createTRPCClient<AppRouter>({
   links: [
     httpBatchLink({
-      url: 'http://localhost:3000/trpc', // Your tRPC server URL
+      url: `${getBaseUrl()}/api/trpc`,
       transformer: superjson,
+      headers() {
+        return {
+          'Content-Type': 'application/json',
+        };
+      },
     }),
   ],
 });
