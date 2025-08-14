@@ -753,7 +753,6 @@ const styles = StyleSheet.create({
   heroGradient: {
     borderRadius: borderRadius.xl,
     padding: spacing.lg,
-    minHeight: 200,
     position: 'relative',
   },
   heroHeader: {
@@ -775,8 +774,7 @@ const styles = StyleSheet.create({
   // Profile hero - center aligned
   profileHero: {
     alignItems: 'center',
-    flex: 1,
-    justifyContent: 'center',
+    paddingVertical: spacing.md,
   },
   profilePictureContainer: {
     width: 80,
