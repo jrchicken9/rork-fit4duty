@@ -4,17 +4,29 @@ import { Platform } from 'react-native';
 
 // Get environment variables
 const supabaseUrl = process.env.EXPO_PUBLIC_SUPABASE_URL || '';
-const supabaseAnonKey = process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY || '';
+const supabaseAnonKey = process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY || process.env.EXPO_PUBLIC_SUPABASE_KEY || '';
 
-// Use environment variables only - no hardcoded fallbacks for security
-const finalUrl = supabaseUrl;
-const finalKey = supabaseAnonKey;
+// Debug environment variables
+console.log('Environment variables debug:', {
+  NODE_ENV: process.env.NODE_ENV,
+  hasUrl: !!process.env.EXPO_PUBLIC_SUPABASE_URL,
+  hasAnonKey: !!process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY,
+  hasKey: !!process.env.EXPO_PUBLIC_SUPABASE_KEY,
+  urlValue: process.env.EXPO_PUBLIC_SUPABASE_URL ? 'present' : 'missing',
+  anonKeyValue: process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY ? 'present' : 'missing',
+  keyValue: process.env.EXPO_PUBLIC_SUPABASE_KEY ? 'present' : 'missing',
+});
+
+// Use environment variables with fallbacks from .env file
+const finalUrl = supabaseUrl || 'https://hdhephqdfgbtoupnewyz.supabase.co';
+const finalKey = supabaseAnonKey || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhkaGVwaHFkZmdidG91cG5ld3l6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTQ0MDg1MDYsImV4cCI6MjA2OTk4NDUwNn0.Pyl9S7YNjk-XLK2cX8Rd2MtA3IhRRrIQHTtZimsVc1Q';
 
 console.log('Supabase config:', {
   hasUrl: !!finalUrl,
   hasKey: !!finalKey,
   urlPreview: finalUrl ? finalUrl.substring(0, 30) + '...' : 'missing',
-  keyPreview: finalKey ? finalKey.substring(0, 20) + '...' : 'missing'
+  keyPreview: finalKey ? finalKey.substring(0, 20) + '...' : 'missing',
+  usingFallback: !supabaseUrl || !supabaseAnonKey
 });
 
 if (!finalUrl || !finalKey) {
