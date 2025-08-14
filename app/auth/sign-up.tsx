@@ -200,7 +200,7 @@ export default function SignUpScreen() {
           <View style={styles.inputGroup}>
             <Text style={styles.inputLabel}>First Name *</Text>
             <View style={styles.inputContainer}>
-              <User size={16} color={Colors.textSecondary} />
+              <User size={20} color={Colors.textSecondary} />
               <TextInput
                 style={styles.textInput}
                 placeholder="Enter your first name"
@@ -215,7 +215,7 @@ export default function SignUpScreen() {
           <View style={styles.inputGroup}>
             <Text style={styles.inputLabel}>Last Name *</Text>
             <View style={styles.inputContainer}>
-              <User size={16} color={Colors.textSecondary} />
+              <User size={20} color={Colors.textSecondary} />
               <TextInput
                 style={styles.textInput}
                 placeholder="Enter your last name"
@@ -230,7 +230,7 @@ export default function SignUpScreen() {
           <View style={styles.inputGroup}>
             <Text style={styles.inputLabel}>Email Address *</Text>
             <View style={styles.inputContainer}>
-              <Mail size={16} color={Colors.textSecondary} />
+              <Mail size={20} color={Colors.textSecondary} />
               <TextInput
                 style={styles.textInput}
                 placeholder="Enter your email address"
@@ -252,7 +252,7 @@ export default function SignUpScreen() {
           <View style={styles.inputGroup}>
             <Text style={styles.inputLabel}>Password *</Text>
             <View style={styles.inputContainer}>
-              <Lock size={16} color={Colors.textSecondary} />
+              <Lock size={20} color={Colors.textSecondary} />
               <TextInput
                 style={styles.textInput}
                 placeholder="Create a password"
@@ -265,7 +265,7 @@ export default function SignUpScreen() {
                 style={styles.eyeButton}
                 onPress={() => setShowPassword(!showPassword)}
               >
-                {showPassword ? <EyeOff size={16} color={Colors.textSecondary} /> : <Eye size={16} color={Colors.textSecondary} />}
+                {showPassword ? <EyeOff size={20} color={Colors.textSecondary} /> : <Eye size={20} color={Colors.textSecondary} />}
               </TouchableOpacity>
             </View>
             
@@ -301,7 +301,7 @@ export default function SignUpScreen() {
           <View style={styles.inputGroup}>
             <Text style={styles.inputLabel}>Confirm Password *</Text>
             <View style={styles.inputContainer}>
-              <Lock size={16} color={Colors.textSecondary} />
+              <Lock size={20} color={Colors.textSecondary} />
               <TextInput
                 style={styles.textInput}
                 placeholder="Confirm your password"
@@ -314,7 +314,7 @@ export default function SignUpScreen() {
                 style={styles.eyeButton}
                 onPress={() => setShowConfirmPassword(!showConfirmPassword)}
               >
-                {showConfirmPassword ? <EyeOff size={16} color={Colors.textSecondary} /> : <Eye size={16} color={Colors.textSecondary} />}
+                {showConfirmPassword ? <EyeOff size={20} color={Colors.textSecondary} /> : <Eye size={20} color={Colors.textSecondary} />}
               </TouchableOpacity>
             </View>
           </View>
@@ -380,13 +380,13 @@ const styles = StyleSheet.create({
     lineHeight: 22,
   },
   inputGroup: {
-    marginBottom: 20,
+    marginBottom: 24,
   },
   inputLabel: {
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: '600',
     color: Colors.text,
-    marginBottom: 8,
+    marginBottom: 12,
   },
   inputContainer: {
     flexDirection: 'row',
@@ -394,18 +394,23 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.white,
     borderRadius: 12,
     paddingHorizontal: 16,
-    paddingVertical: 12,
+    paddingVertical: 16,
     borderWidth: 1,
     borderColor: Colors.border,
+    minHeight: 56,
   },
   textInput: {
     flex: 1,
-    fontSize: 16,
+    fontSize: 18,
     color: Colors.text,
     marginLeft: 12,
+    paddingVertical: 8,
   },
   eyeButton: {
-    padding: 4,
+    padding: 12,
+    marginLeft: 8,
+    borderRadius: 8,
+    backgroundColor: Colors.gray[100],
   },
   dropdownText: {
     flex: 1,
@@ -414,40 +419,43 @@ const styles = StyleSheet.create({
     marginLeft: 12,
   },
   passwordRequirements: {
-    marginTop: 12,
-    padding: 12,
+    marginTop: 16,
+    padding: 16,
     backgroundColor: Colors.background,
-    borderRadius: 8,
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: Colors.border,
   },
   passwordStrengthLabel: {
-    fontSize: 14,
+    fontSize: 16,
     fontWeight: '600',
     color: Colors.text,
-    marginBottom: 8,
+    marginBottom: 12,
   },
   passwordStrength: {
     fontWeight: 'bold',
   },
   requirementsList: {
-    gap: 6,
+    gap: 8,
   },
   requirement: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 8,
+    gap: 10,
   },
   requirementDot: {
-    width: 8,
-    height: 8,
-    borderRadius: 4,
+    width: 10,
+    height: 10,
+    borderRadius: 5,
     backgroundColor: Colors.gray[300],
   },
   requirementMet: {
     backgroundColor: Colors.success,
   },
   requirementText: {
-    fontSize: 12,
+    fontSize: 14,
     color: Colors.textSecondary,
+    lineHeight: 18,
   },
   requirementTextMet: {
     color: Colors.text,
