@@ -141,7 +141,7 @@ export default function CPPOnboardingRibbon({ onDismiss }: CPPOnboardingRibbonPr
           
           <View style={styles.textSection}>
             <Text style={styles.title}>
-              {isNewUser ? 'Welcome to PolicePrep!' : 'Complete Your CPP Setup'}
+              {isNewUser ? 'Welcome to Fit4Duty!' : 'Complete Your CPP Setup'}
             </Text>
             <Text style={styles.description}>
               {isNewUser 
@@ -243,7 +243,8 @@ const styles = StyleSheet.create({
   description: {
     fontSize: typography.bodyMedium.fontSize,
     color: Colors.white + 'CC',
-    lineHeight: 16,
+    lineHeight: 18,
+    flexWrap: 'wrap',
   },
   actionSection: {
     alignItems: 'flex-end',
