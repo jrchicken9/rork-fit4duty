@@ -20,6 +20,12 @@
         "com.apple.developer.in-app-payments": [
           "merchant.com.fit4duty.app"
         ]
+      },
+      "infoPlist": {
+        "CFBundleAllowMixedLocalizations": true,
+        "CFBundleLocalizations": [
+          "fr"
+        ]
       }
     },
     "android": {
@@ -45,8 +51,8 @@
       [
         "@stripe/stripe-react-native",
         {
-          "enableGooglePay": false,
-          "merchantIdentifier": "merchant.com.fit4duty.app"
+          "merchantIdentifier": "merchant.com.fit4duty.app",
+          "enableGooglePay": false
         }
       ]
     ],
